@@ -5,22 +5,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="author" content="Untree.co">
-  <link rel="shortcut icon" href="images/Logo.png">
+  <link rel="shortcut icon" href="../images/Logo.png">
 
   <meta name="description" content="" />
   <meta name="keywords" content="bootstrap, bootstrap4" />
 
 		<!-- Bootstrap CSS -->
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-		<link href="css/tiny-slider.css" rel="stylesheet">
-		<link href="css/style.css" rel="stylesheet">
+		<link href="../css/tiny-slider.css" rel="stylesheet">
+		<link href="../css/style.css" rel="stylesheet">
 		<title>Brainbook</title>
 	</head>
 
 	<body>
 
-		<!-- Start Header/Navigation -->
+		<!-- Inicio de navegación -->
 		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
 			<div class="container">
@@ -37,28 +37,30 @@
 						</li>
 						<li><a class="nav-link" href="cursos.html">Cursos</a></li>
 						<li><a class="nav-link" href="about.html">Foro</a></li>
-						<li><a class="nav-link" href="services.html">Nosotros</a></li>
-						<li><a class="nav-link" href="blog.html">Compartir</a></li>
+						<li><a class="nav-link" href="services.html">Ayuda</a></li>
+						
 				
 					</ul>
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-						<li><a class="nav-link" href="#"><img src="images/user.svg"></a></li>
 						
+						<li><a class="nav-link" herf="#"><image src="../images/campana.png" width="18" height="20"></a> </li>
+						<li><a class="nav-link" href="#"><img src="../images/user.svg"></a></li>	
+											
 					</ul>
 				</div>
 			</div>
 				
 		</nav>
-		<!-- End Header/Navigation -->
+		<!-- Fin de navegación -->
 
 		<!-- Start Hero Section -->
 			<div class="hero">
 				<div class="container">
 					<div class="row justify-content-between">
-						<div class="col-lg-5">
+						<div class="col-lg-3">
 							<div class="intro-excerpt">
-								<h1>Tu lugar de estudio<span clsas="d-block"></span></h1>
+								<h1>Buen día, Jairo<span clsas="d-block"></span></h1>
 								<p class="mb-4">Metodología de aprendizaje moderno, donde el contenido se percibe de manera diferente</p>
 								<p><a href="" class="btn btn-secondary me-2">Guia</a><a href="#" class="btn btn-white-outline">Explorar</a></p>
 							</div>
