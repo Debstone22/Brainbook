@@ -5,18 +5,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="author" content="Untree.co">
+  
   <link rel="shortcut icon" href="../images/Logo.png">
+
 
   <meta name="description" content="" />
   <meta name="keywords" content="bootstrap, bootstrap4" />
 
 		<!-- Bootstrap CSS -->
+
 		<link href="../css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 		<link href="../css/tiny-slider.css" rel="stylesheet">
 		<link href="../css/style.css" rel="stylesheet">
 		<title>Brainbook</title>
 		<script src="../js/saludo.js" defer></script>
+
 	</head>
 
 	<body>
@@ -44,16 +48,53 @@
 					</ul>
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+
 						
 						<li><a class="nav-link" herf="#"><image src="../images/campana.png" width="18" height="20"></a> </li>
 						<li><a class="nav-link" href="login.php"><img src="../images/user.svg"></a></li>	
-											
+					
 					</ul>
 				</div>
 			</div>
 				
 		</nav>
+
 		<!-- Fin de navegación -->
+
+		<!-- End Header/Navigation -->
+		 
+		 <!-- Modal de Inicio de Sesión -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+		</div>
+		<div class="modal-body">
+		  <form>
+			<div class="mb-3">
+			  <label for="email" class="form-label">Correo electrónico</label>
+			  <input type="text" class="form-control" id="email" placeholder="nombre@ejemplo.com" required>
+			</div>
+			<div class="mb-3">
+			  <label for="password" class="form-label">Contraseña</label>
+			  <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
+			</div>
+			<button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+		  </form>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  
+
+		
+
 
 		<!-- Primera sección -->
 			<div class="hero">
@@ -91,12 +132,18 @@
 					<!-- Start Column 2 -->
 					<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
 						<a class="product-item" href="cart.html">
+
 							<img src="../images/ingles.png" class="img-fluid product-thumbnail">
+
 							<h3 class="product-title">Inglés 4</h3>
 							<strong class="product-price">Semana7</strong>
 
 							<span class="icon-cross">
+
 								<img src="../images/cross.svg" class="img-fluid">
+
+				
+
 							</span>
 						</a>
 					</div> 
@@ -105,12 +152,16 @@
 					<!-- Start Column 3 -->
 					<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
 						<a class="product-item" href="cart.html">
+
 							<img src="../images/integracion.png" class="img-fluid product-thumbnail">
+
+
 							<h3 class="product-title">Integrador</h3>
 							<strong class="product-price">Semana7</strong>
 
 							<span class="icon-cross">
 								<img src="../images/cross.svg" class="img-fluid">
+
 							</span>
 						</a>
 					</div>
@@ -119,12 +170,16 @@
 					<!-- Start Column 4 -->
 					<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
 						<a class="product-item" href="cart.html">
+
 							<img src="../images/la-red.png" class="img-fluid product-thumbnail">
+
 							<h3 class="product-title">Redes y Comunicaciones</h3>
 							<strong class="product-price">Semana6</strong>
 
 							<span class="icon-cross">
+
 								<img src="../images/cross.svg" class="img-fluid">
+
 							</span>
 						</a>
 					</div>
@@ -135,7 +190,6 @@
 		</div>
 		<!-- End Product Section -->
 
-		
 		<!-- End Why Choose Us Section -->
 
 		<!-- Start We Help Section
@@ -373,9 +427,40 @@
 		<!-- End Footer Section	 -->
 
 
-		<script src="js/bootstrap.bundle.min.js"></script>
-		<script src="js/tiny-slider.js"></script>
-		<script src="js/custom.js"></script>
+		<script src="/js/bootstrap.bundle.min.js"></script>
+		<script src="/js/tiny-slider.js"></script>
+		<script src="/js/custom.js"></script>
+		<script>
+			// Función para manejar el inicio de sesión
+			document.getElementById('loginModal').addEventListener('submit', function (e) {
+			  e.preventDefault(); // Evita que el formulario se envíe
+		  
+			  const emailInput = document.getElementById('email').value;
+			  const passwordInput = document.getElementById('password').value;
+		  
+			  // Carga el archivo JSON de usuarios
+			  fetch('/js/usuarios.json')
+				.then(response => response.json())
+				.then(users => {
+				  // Busca si el usuario existe y si la contraseña es correcta
+				  const user = users.find(u => u.email === emailInput && u.password === passwordInput);
+		  
+				  if (user) {
+					// Inicio de sesión exitoso
+					alert("Inicio de sesión exitoso");
+					// Aquí puedes cerrar el modal o redirigir al usuario
+					document.getElementById('loginError').style.display = 'none';
+					document.getElementById('loginModal').modal('hide');
+				  } else {
+					// Muestra un mensaje de error
+					document.getElementById('loginError').style.display = 'block';
+				  }
+				})
+				.catch(error => {
+				  console.error("Error al cargar el archivo JSON:", error);
+				});
+			});
+		  </script>
 	</body>
 
 </html>
