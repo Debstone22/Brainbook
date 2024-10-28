@@ -147,12 +147,12 @@ a.more {
       top: 10px;
       right: 0px;
       z-index: 2;
-      max-width: 690px;
+      max-width: 650px;
       left: -20px; }
       @media (min-width: 768px) {
         .hero .hero-img-wrap img {
           right: 0px;
-          left: -100px;
+          left: -80px;
           top: 20px; 
         
         } 
@@ -756,3 +756,93 @@ textarea {
       object-fit: cover; /* Ajusta la imagen para que se adapte al tamaño */
       border-radius: 50%; /* Redondea la imagen para que sea un círculo */
     }
+
+/* Foro de preguntas*/
+.qa-section {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  color: #007BFF;
+}
+
+.question {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.question h3 {
+  color: #007BFF; /* Color para el título de la pregunta */
+  margin: 0;
+}
+
+.question p {
+  margin: 5px 0 0;
+  color: #555;
+}
+
+form {
+  margin-top: 20px;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none; /* Evita que el usuario cambie el tamaño del cuadro */
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3; /* Color al pasar el mouse */
+}
+
+.questions-section {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #e9ecef;
+  border-radius: 8px;
+}
+
+/*fin del foro*/
+
+/*Login*/
+.gradient-custom-2 {
+  /* fallback for old browsers */
+  background: #fccb90;
+  
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, #1948f4, #2a87dd, #48c9ef, #eded44);
+  
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right,#1948f4, #2a87dd, #48c9ef, #eded44);
+  }
+  
+  @media (min-width: 768px) {
+  .gradient-form {
+  height: 100vh !important;
+  }
+  }
+  @media (min-width: 769px) {
+  .gradient-custom-2 {
+  border-top-right-radius: .3rem;
+  border-bottom-right-radius: .3rem;
+  }
+  }
+  /*Fin de la edicion del Login*/
