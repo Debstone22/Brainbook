@@ -45,7 +45,7 @@
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 						
 						<li><a class="nav-link" herf="#"><image src="../images/campana.png" width="18" height="20"></a> </li>
-						<li><a class="nav-link" href="#"><img src="../images/user.svg"></a></li>	
+						<li><a class="nav-link" href="login.php"><img src="../images/user.svg"></a></li>	
 											
 					</ul>
 				</div>
@@ -109,9 +109,9 @@
 		
 
 
-		<script src="js/bootstrap.bundle.min.js"></script>
-		<script src="js/tiny-slider.js"></script>
-		<script src="js/custom.js"></script>
+		<script src="../js/bootstrap.bundle.min.js"></script>
+		<script src="../js/tiny-slider.js"></script>
+		<script src="../js/custom.js"></script>
 	</body>
 
 </html>

@@ -219,11 +219,11 @@ a.more {
 .section-title {
   color: #2f2f2f;
 }
-
+/*curso*/
 .product-section {
-  padding: 7rem 0;
+  padding: 4rem 0;
 }
-.product-section .product-item {
+/* .product-section .product-item {
   text-align: center;
   text-decoration: none;
   display: block;
@@ -240,11 +240,11 @@ a.more {
   transition: 0.3s all ease;
 }
 .product-section .product-item h3 {
-  font-weight: 600;
+  font-weight: 200;
   font-size: 16px;
 }
 .product-section .product-item strong {
-  font-weight: 800 !important;
+  font-weight: 400 !important;
   font-size: 18px !important;
 }
 .product-section .product-item h3,
@@ -303,8 +303,37 @@ a.more {
 }
 .product-section .product-item:hover:before {
   height: 70%;
+} */
+
+.product-item {
+  display: flex; /* Usar flexbox para alinear el contenido */
+  flex-direction: column; /* Alinear los elementos en columna */
+  justify-content: space-between; /* Espacio entre los elementos */
+  height: 100%; /* Hacer que la tarjeta ocupe toda la altura del contenedor */
+  text-decoration: none; /* Eliminar subrayado del enlace */
+  color: inherit; /* Heredar el color del texto */
+  border: 1px solid #ddd; /* Opcional: agregar un borde */
+  border-radius: 8px; /* Opcional: bordes redondeados */
+  padding: 15px; /* Espaciado interno */
+  background-color: #fff; /* Fondo blanco */
+  transition: transform 0.3s, box-shadow 0.3s; /* Transición suave para el efecto hover */
 }
 
+.product-item:hover {
+  transform: scale(1.05); /* Aumentar el tamaño de la tarjeta al 105% */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra al pasar el mouse */
+}
+
+.product-thumbnail {
+  max-width: 100%; /* Asegurarse de que la imagen no exceda el contenedor */
+  height: auto; /* Mantener la proporción de la imagen */
+}
+
+.title-curse, .product-price, h3 {
+  margin: 0; /* Eliminar márgenes por defecto */
+  padding: 5px 0; /* Espaciado vertical entre los elementos */
+}
+/*fin curso*/
 .why-choose-section {
   padding: 7rem 0;
 }
@@ -593,11 +622,11 @@ a.more {
 .testimonial-slider-wrap .tns-nav button.tns-nav-active:before {
   background-color: #3b5d50;
 }
-
+/*curso*/
 .before-footer-section {
-  padding: 7rem 0 12rem 0 !important;
+  padding: 2rem 0 6rem 0 !important;
 }
-
+/*fin de curso*/
 .blog-section {
   padding: 7rem 0 12rem 0;
 }
@@ -636,11 +665,11 @@ a.more {
 }
 
 
-
+/*curso*/
 .untree_co-section {
-  padding: 7rem 0;
+  padding: 4rem 0;
 }
-
+/*fin curso*/
 .form-control {
   height: 50px;
   border-radius: 10px;
@@ -822,6 +851,19 @@ button:hover {
 
 /*fin del foro*/
 
+/*menu*/
+.menu {
+  
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  max-width: 200px;
+  margin: auto;
+  
+}
+/*fin menu*/
+
 /*Login*/
 .gradient-custom-2 {
   /* fallback for old browsers */
@@ -846,3 +888,50 @@ button:hover {
   }
   }
   /*Fin de la edicion del Login*/
+
+  .h2-title{
+    text-align: center;
+    color: #000000;
+    font-size: 25px;
+  }
+
+  .title-curse{
+    color: #000000;
+    font-size: 20px;
+  }
+
+  /* tarjetas de ayuda  */
+
+  .card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center; /* Centers content within the card */
+  }
+  
+  .card-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .card-description {
+    font-size: 1em;
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+  
+  .card-link {
+    display: inline-block;
+    background-color: #007bff; /* Example button color */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none; /* Remove default link underline */
+  }
+  
+  .card-link:hover {
+    opacity: 0.8;
+  }
