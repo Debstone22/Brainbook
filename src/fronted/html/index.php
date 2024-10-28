@@ -16,6 +16,7 @@
 		<link href="../css/tiny-slider.css" rel="stylesheet">
 		<link href="../css/style.css" rel="stylesheet">
 		<title>Brainbook</title>
+		<script src="../js/saludo.js" defer></script>
 	</head>
 
 	<body>
@@ -33,11 +34,11 @@
 				<div class="collapse navbar-collapse" id="navbarsFurni">
 					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
 						<li class="nav-item active">
-							<a class="nav-link" href="index.html">Inicio</a>
+							<a class="nav-link" href="index.php">Inicio</a>
 						</li>
-						<li><a class="nav-link" href="cursos.html">Cursos</a></li>
-						<li><a class="nav-link" href="about.html">Foro</a></li>
-						<li><a class="nav-link" href="services.html">Ayuda</a></li>
+						<li><a class="nav-link" href="cursos.php">Cursos</a></li>
+						<li><a class="nav-link" href="foro.php">Foro</a></li>
+						<li><a class="nav-link" href="ayuda.php">Ayuda</a></li>
 						
 				
 					</ul>
@@ -45,7 +46,7 @@
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 						
 						<li><a class="nav-link" herf="#"><image src="../images/campana.png" width="18" height="20"></a> </li>
-						<li><a class="nav-link" href="#"><img src="../images/user.svg"></a></li>	
+						<li><a class="nav-link" href="login.php"><img src="../images/user.svg"></a></li>	
 											
 					</ul>
 				</div>
@@ -54,44 +55,48 @@
 		</nav>
 		<!-- Fin de navegación -->
 
-		<!-- Start Hero Section -->
+		<!-- Primera sección -->
 			<div class="hero">
 				<div class="container">
 					<div class="row justify-content-between">
-						<div class="col-lg-3">
+						<!-- <div class="col-lg-3"> -->
 							<div class="intro-excerpt">
-								<h1>Buen día, Jairo<span clsas="d-block"></span></h1>
-								<p class="mb-4">Metodología de aprendizaje moderno, donde el contenido se percibe de manera diferente</p>
-								<p><a href="" class="btn btn-secondary me-2">Guia</a><a href="#" class="btn btn-white-outline">Explorar</a></p>
+								<h1></h1>
+								<h1 id="greeting"><span clsas="d-block"></span></h1>
+
+								<p class="mb-4">Es tiempo de adquirir más conocimientos</p>
+								<p><a href="https://tubiblioteca.utp.edu.pe/" class="btn btn-secondary me-2">Biblioteca</a>
+								
+								<a href="https://sso.utp.edu.pe/auth/realms/Xpedition/protocol/openid-connect/auth?client_id=pao-web&redirect_uri=https%3A%2F%2Fclass.utp.edu.pe%2F&state=fefe7e3e-28bf-4744-8151-f536faa82aac&response_mode=fragment&response_type=code&scope=openid&nonce=8bbed0d1-bdca-49ae-8463-c50ecdfd2f79" class="btn btn-white-outline">Portal</a></p>
 							</div>
-						</div>
+						<!-- </div> -->
 						
 					</div>
 				</div>
 			</div>
-		<!-- End Hero Section -->
+		<!-- Fin de la sección -->
 
-		<!-- Start Product Section -->
+		<!-- Ultimo vistazo de los cursos -->
 		<div class="product-section">
 			<div class="container">
 				<div class="row">
 
-					<!-- Start Column 1 -->
+					<!-- Primera columna -->
 					<div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
-						<h2 class="mb-4 section-title">Tus cursos de cada ciclo</h2>
-						<p><a href="cursos.html" class="btn">Explorar</a></p>
+						<h2 class="mb-4 section-title">No te pierdas de nada</h2>
+						<p><a href="cursos.html" class="btn">¡Adelante!</a></p>
 					</div> 
-					<!-- End Column 1 -->
+					<!-- Fin de la columna 1 -->
 
 					<!-- Start Column 2 -->
 					<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
 						<a class="product-item" href="cart.html">
-							<img src="images/ingles.png" class="img-fluid product-thumbnail">
+							<img src="../images/ingles.png" class="img-fluid product-thumbnail">
 							<h3 class="product-title">Inglés 4</h3>
-							<strong class="product-price">S7</strong>
+							<strong class="product-price">Semana7</strong>
 
 							<span class="icon-cross">
-								<img src="images/cross.svg" class="img-fluid">
+								<img src="../images/cross.svg" class="img-fluid">
 							</span>
 						</a>
 					</div> 
@@ -100,12 +105,12 @@
 					<!-- Start Column 3 -->
 					<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
 						<a class="product-item" href="cart.html">
-							<img src="images/integracion.png" class="img-fluid product-thumbnail">
+							<img src="../images/integracion.png" class="img-fluid product-thumbnail">
 							<h3 class="product-title">Integrador</h3>
-							<strong class="product-price">S7</strong>
+							<strong class="product-price">Semana7</strong>
 
 							<span class="icon-cross">
-								<img src="images/cross.svg" class="img-fluid">
+								<img src="../images/cross.svg" class="img-fluid">
 							</span>
 						</a>
 					</div>
@@ -114,12 +119,12 @@
 					<!-- Start Column 4 -->
 					<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
 						<a class="product-item" href="cart.html">
-							<img src="images/la-red.png" class="img-fluid product-thumbnail">
+							<img src="../images/la-red.png" class="img-fluid product-thumbnail">
 							<h3 class="product-title">Redes y Comunicaciones</h3>
-							<strong class="product-price">S6</strong>
+							<strong class="product-price">Semana6</strong>
 
 							<span class="icon-cross">
-								<img src="images/cross.svg" class="img-fluid">
+								<img src="../images/cross.svg" class="img-fluid">
 							</span>
 						</a>
 					</div>
@@ -130,60 +135,7 @@
 		</div>
 		<!-- End Product Section -->
 
-		<!-- Start Why Choose Us Section -->
-		<div class="why-choose-section">
-			<div class="container">
-				<div class="row justify-content-between">
-					<div class="col-lg-6">
-						<h2 class="section-title">Sube tus documentos</h2>
-						<div class="row my-5">
-							<div class="col-6 col-md-6">
-								<div class="feature">
-								  <div class="icon">
-									<img src="images/upload icon.png" alt="Image" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
-								  </div>
-								  <h3>Importa &amp; Exporta tu material</h3>
-								</div>
-							  </div>
-
-							<div class="col-6 col-md-6">
-								<div class="feature">
-									<div class="icon">
-										<img src="images/Muy bueno icon.png" alt="Image" class="imf-fluid">
-									</div>
-									<h3>Califica el trabajo de tus compañeros</h3>								</div>
-							</div>
-
-							<div class="col-6 col-md-6">
-								<div class="feature">
-									<div class="icon">
-										<img src="images/ayuda icon.png" alt="Image" class="imf-fluid">
-									</div>
-									<h3>Foros de ayuda</h3>
-								</div>
-							</div>
-
-							<div class="col-6 col-md-6">
-								<div class="feature">
-									<div class="icon">
-										<img src="images/return.svg" alt="Image" class="imf-fluid">
-									</div>
-									<h3>Comparte e Invita </h3>
-								</div>
-							</div>
-
-						</div>
-					</div>
-
-					<div class="col-lg-5">
-						<div class="img-wrap">
-							<img src="images/biblioteca.jpg" alt="Image" class="img-fluid">
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
+		
 		<!-- End Why Choose Us Section -->
 
 		<!-- Start We Help Section
