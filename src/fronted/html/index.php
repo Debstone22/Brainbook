@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+// Verifica si el usuario ha iniciado sesión
+
+if (isset($_SESSION['usuario'])) {
+    $nombre_usuario = $_SESSION['usuario'];
+} else {
+    header("Location: login.php");
+    exit();
+}
+
+?>
 
 <!doctype html>
 <html lang="en">
@@ -62,53 +75,20 @@
 		<!-- Fin de navegación -->
 
 		<!-- End Header/Navigation -->
-		 
-		 <!-- Modal de Inicio de Sesión -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
-		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-		</div>
-		<div class="modal-body">
-		  <form>
-			<div class="mb-3">
-			  <label for="email" class="form-label">Correo electrónico</label>
-			  <input type="text" class="form-control" id="email" placeholder="nombre@ejemplo.com" required>
-			</div>
-			<div class="mb-3">
-			  <label for="password" class="form-label">Contraseña</label>
-			  <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
-			</div>
-			<button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
-		  </form>
-		</div>
-		<div class="modal-footer">
-		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-		</div>
-	  </div>
-	</div>
-  </div>
-
-  
-
 		
-
-
 		<!-- Primera sección -->
 			<div class="hero">
 				<div class="container">
 					<div class="row justify-content-between">
 						<!-- <div class="col-lg-3"> -->
 							<div class="intro-excerpt">
-								<h1></h1>
 								<h1 id="greeting"><span clsas="d-block"></span></h1>
-
-								<p class="mb-4">Es tiempo de adquirir más conocimientos</p>
+								<h1>Bienvenido, <?php echo htmlspecialchars($nombre_usuario); ?>!</h1>
+								<p class="mb-4">Es tiempo de adquirir más conocimientos </p>
 								<p><a href="https://tubiblioteca.utp.edu.pe/" class="btn btn-secondary me-2"target="_blank">Biblioteca</a>
 								
 								<a href="https://sso.utp.edu.pe/auth/realms/Xpedition/protocol/openid-connect/auth?client_id=pao-web&redirect_uri=https%3A%2F%2Fclass.utp.edu.pe%2F&state=fefe7e3e-28bf-4744-8151-f536faa82aac&response_mode=fragment&response_type=code&scope=openid&nonce=8bbed0d1-bdca-49ae-8463-c50ecdfd2f79" class="btn btn-white-outline"target="_blank">Portal</a></p>
+								<a href="logout.php" class="btn btn-danger">Cerrar sesión</a>
 							</div>
 						<!-- </div> -->
 						

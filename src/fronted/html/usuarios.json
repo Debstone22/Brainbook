@@ -5,7 +5,7 @@
       "nombre": "Luis",
       "apellido": "Garcia",
       "email": "U21221971",
-      "password": "password123",
+      "password": "123",
       "edad": 25,
       "celular": "+51987654321"
     },
@@ -15,7 +15,7 @@
       "nombre": "Maria",
       "apellido": "Lopez",
       "email": "U22221972",
-      "password": "passMaria456",
+      "password": "ola",
       "edad": 22,
       "celular": "+51912345678"
     },
