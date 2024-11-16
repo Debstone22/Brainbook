@@ -27,10 +27,10 @@ if (isset($_SESSION['usuario'])) {
 
 		<!-- Bootstrap CSS -->
 
-		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="../public/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-		<link href="../css/tiny-slider.css" rel="stylesheet">
-		<link href="../css/style.css" rel="stylesheet">
+		<link href="../public/css/tiny-slider.css" rel="stylesheet">
+		<link href="../public/css/style.css" rel="stylesheet">
 		<title>Brainbook</title>
 		<script src="../js/saludo.js" defer></script>
 

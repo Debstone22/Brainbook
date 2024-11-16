@@ -69,7 +69,7 @@
 						</div>
 						<div class="col-lg-7">
             <div class="hero-img-wrap">
-								<img src="../images/foro.png" class="img-fluid">
+								<img src="../public/images/foro.png" class="img-fluid">
 							</div>
 						</div>
 					</div>
@@ -101,9 +101,9 @@
 		
 
 
-		<script src="../js/bootstrap.bundle.min.js"></script>
-		<script src="../js/tiny-slider.js"></script>
-		<script src="../js/custom.js"></script>
+		<script src="../public/js/bootstrap.bundle.min.js"></script>
+		<script src="../public/js/tiny-slider.js"></script>
+		<script src="../public/js/custom.js"></script>
 	</body>
 
 </html>
