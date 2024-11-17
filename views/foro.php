@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="author" content="">
-  <link rel="shortcut icon" href="../images/Logo.png">
+  <link rel="shortcut icon" href="../public/images/Logo.png">
 
   <meta name="description" content="" />
   <meta name="keywords" content="bootstrap, bootstrap4" />
 
 		<!-- Bootstrap CSS -->
 
-		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="../public/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-		<link href="../css/tiny-slider.css" rel="stylesheet">
-		<link href="../css/style.css" rel="stylesheet">
+		<link href="../public/css/tiny-slider.css" rel="stylesheet">
+		<link href="../public/css/style.css" rel="stylesheet">
 		<title>Brainbook</title>
 	</head>
 
@@ -44,8 +44,8 @@
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 						
-						<li><a class="nav-link" herf="#"><image src="../images/campana.png" width="18" height="20"></a> </li>
-						<li><a class="nav-link" href="login.php"><img src="../images/user.svg"></a></li>	
+						<li><a class="nav-link" herf="#"><image src="../public/images/campana.png" width="18" height="20"></a> </li>
+						<li><a class="nav-link" href="login.php"><img src="../public/images/user.svg"></a></li>	
 											
 					</ul>
 				</div>
@@ -69,7 +69,7 @@
 						</div>
 						<div class="col-lg-7">
 							<div class="hero-img-wrap">
-								<img src="../images/foro.png" class="img-fluid">
+								<img src="../public/images/foro.png" class="img-fluid">
 							</div>
 						</div>
 					</div>
@@ -109,9 +109,9 @@
 		
 
 
-		<script src="../js/bootstrap.bundle.min.js"></script>
-		<script src="../js/tiny-slider.js"></script>
-		<script src="../js/custom.js"></script>
+		<script src="../public/js/bootstrap.bundle.min.js"></script>
+		<script src="../public/js/tiny-slider.js"></script>
+		<script src="../public/js/custom.js"></script>
 	</body>
 
 </html>

@@ -47,9 +47,9 @@
         <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 
           <li><a class="nav-link" herf="#">
-              <image src="../images/campana.png" width="18" height="20">
+              <image src="../public/images/campana.png" width="18" height="20">
             </a> </li>
-          <li><a class="nav-link" href="#"><img src="../images/user.svg"></a></li>
+          <li><a class="nav-link" href="#"><img src="../public/images/user.svg"></a></li>
 
         </ul>
       </div>
@@ -68,7 +68,7 @@
                 <div class="card-body p-md-5 mx-md-4">
 
                   <div class="text-center">
-                    <img src="../images/Logo2.png" style="width: 185px;" alt="logo">
+                    <img src="../public/images/Logo2.png" style="width: 185px;" alt="logo">
                     <h4 class="mt-1 mb-5 pb-1">Inicia sesiónasdad en Brainbook</h4>
                   </div>
 
@@ -106,9 +106,9 @@
       </div>
     </div>
   </section>
-  <script src="../js/bootstrap.bundle.min.js"></script>
-  <script src="../js/tiny-slider.js"></script>
-  <script src="../js/custom.js"></script>
+  <script src="../public/js/bootstrap.bundle.min.js"></script>
+  <script src="../public/js/tiny-slider.js"></script>
+  <script src="../public/js/custom.js"></script>
 </body>
 
 </html>

@@ -19,7 +19,7 @@ if (isset($_SESSION['usuario'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="author" content="Untree.co">
   
-  <link rel="shortcut icon" href="../images/Logo.png">
+  <link rel="shortcut icon" href="../public/images/Logo.png">
 
 
   <meta name="description" content="" />
@@ -32,7 +32,7 @@ if (isset($_SESSION['usuario'])) {
 		<link href="../public/css/tiny-slider.css" rel="stylesheet">
 		<link href="../public/css/style.css" rel="stylesheet">
 		<title>Brainbook</title>
-		<script src="../js/saludo.js" defer></script>
+		<script src="../public/js/saludo.js" defer></script>
 
 	</head>
 
@@ -42,7 +42,7 @@ if (isset($_SESSION['usuario'])) {
 		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
 			<div class="container">
-				<a class="navbar-brand" href="index.html">Brainbook<span>.</span></a>
+				<a class="navbar-brand" href="index.php">Brainbook<span>.</span></a>
 
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -63,8 +63,8 @@ if (isset($_SESSION['usuario'])) {
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 
 						
-						<li><a class="nav-link" herf="#"><image src="../images/campana.png" width="18" height="20"></a> </li>
-						<li><a class="nav-link" href="login.php"><img src="../images/user.svg"></a></li>	
+						<li><a class="nav-link" herf="#"><image src="../public/images/campana.png" width="18" height="20"></a> </li>
+						<li><a class="nav-link" href="login.php"><img src="../public/images/user.svg"></a></li>	
 					
 					</ul>
 				</div>
@@ -113,13 +113,13 @@ if (isset($_SESSION['usuario'])) {
 					<!-- columna 2 -->
 					<div class="col-6 col-md-2 col-lg-2 mb-3">
 						<a class="product-item" href="#">
-							<img src="../images/analisis.png" class="img-fluid product-thumbnail">
+							<img src="../public/images/analisis.png" class="img-fluid product-thumbnail">
 							<p class="title-curse">Analisis y Diseño</p>
 							
 							<strong class="product-price">Semana 7</strong>
 
 							<span class="icon-cross">
-								<img src="../images/cross.svg" class="img-fluid">
+								<img src="../public/images/cross.svg" class="img-fluid">
 							</span>
 						</a>
 					</div>
@@ -128,13 +128,13 @@ if (isset($_SESSION['usuario'])) {
 					<!--columna 3 -->
 					<div class="col-6 col-md-2 col-lg-2 mb-3">
 						<a class="product-item" href="#">
-							<img src="../images/ingles.png" class="img-fluid product-thumbnail">
+							<img src="../public/images/ingles.png" class="img-fluid product-thumbnail">
 							<p class="title-curse">Inglés IV</p>
 							
 							<strong class="product-price">Semana 7</strong>
 
 							<span class="icon-cross">
-								<img src="../images/cross.svg" class="img-fluid">
+								<img src="../public/images/cross.svg" class="img-fluid">
 							</span>
 						</a>
 					</div>
@@ -143,13 +143,13 @@ if (isset($_SESSION['usuario'])) {
 					<!-- columna 4 -->
 					<div class="col-6 col-md-2 col-lg-2 mb-3">
 						<a class="product-item" href="#">
-							<img src="../images/analisis.png" class="img-fluid product-thumbnail">
+							<img src="../public/images/analisis.png" class="img-fluid product-thumbnail">
 							<p class="title-curse">Analisis y Diseño</p>
 							
 							<strong class="product-price">Semana 7</strong>
 
 							<span class="icon-cross">
-								<img src="../images/cross.svg" class="img-fluid">
+								<img src="../public/images/cross.svg" class="img-fluid">
 							</span>
 						</a>
 					</div>
@@ -163,9 +163,9 @@ if (isset($_SESSION['usuario'])) {
 		
 
 
-		<script src="../js/bootstrap.bundle.min.js"></script>
-		<script src="../js/tiny-slider.js"></script>
-		<script src="../js/custom.js"></script>
+		<script src="../public/js/bootstrap.bundle.min.js"></script>
+		<script src="../public/js/tiny-slider.js"></script>
+		<script src="../public/js/custom.js"></script>
 		<script>
 			// Función para manejar el inicio de sesión
 			document.getElementById('loginModal').addEventListener('submit', function (e) {
