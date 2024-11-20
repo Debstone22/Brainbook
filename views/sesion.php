@@ -4,32 +4,54 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Leemos el archivo JSON de usuarios
-    $json_data = file_get_contents("usuarios.json");
-    $usuarios = json_decode($json_data, true);
+    // Conexión a la base de datos
+    include '../config/database.php'; 
 
-    // Variable para indicar si el login fue exitoso
-    $login_exitoso = false;
+    // Crear instancia de la clase Database y obtener la conexión
+    $database = new Database();
+    $conn = $database->getConnection();
 
-    // Recorrer los usuarios y verificar las credenciales
-    foreach ($usuarios as $usuario) {
-        if ($usuario['email'] === $email && $usuario['password'] === $password) {
-            $login_exitoso = true;
-            $nombre_usuario = $usuario['nombre'];
-            $id_rol = $usuario['id_rol'];
-            break;
+    // Preparar la consulta
+    $query = "SELECT id_usuario, id_rol, nombre, password FROM Usuarios WHERE email = :email";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+
+    // Verificar si el usuario existe
+    if ($stmt->rowCount() > 0) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $id_usuario = $row['id_usuario'];
+        $id_rol = $row['id_rol'];
+        $nombre_usuario = $row['nombre'];
+        $stored_password = $row['password'];
+
+        // Verificar si la contraseña almacenada es un hash
+        if (password_verify($password, $stored_password)) {
+            // Contraseña hasheada verificada
+            session_start();
+            $_SESSION['usuario'] = $nombre_usuario;
+            $_SESSION['rol'] = $id_rol;
+            header("Location: index.php"); // Redirecciona a un dashboard o página principal
+            exit();
+        } elseif ($stored_password === $password) {
+            // Contraseña en texto plano verificada, actualizar a un hash
+            $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+            $update_query = "UPDATE Usuarios SET password = :hashed_password WHERE id_usuario = :id_usuario";
+            $update_stmt = $conn->prepare($update_query);
+            $update_stmt->bindParam(':hashed_password', $hashed_password);
+            $update_stmt->bindParam(':id_usuario', $id_usuario);
+            $update_stmt->execute();
+
+            session_start();
+            $_SESSION['usuario'] = $nombre_usuario;
+            $_SESSION['rol'] = $id_rol;
+            header("Location: index.php"); // Redirecciona a un dashboard o página principal
+            exit();
+        } else {
+            echo "<p>Contraseña incorrecta. Por favor, intenta de nuevo.</p>";
         }
-    }
-
-    if ($login_exitoso) {
-        // Redireccionar al usuario según su rol
-        session_start();
-        $_SESSION['usuario'] = $nombre_usuario;
-        $_SESSION['rol'] = $id_rol;
-        header("Location: index.php"); // Redirecciona a un dashboard o página principal
-        exit();
     } else {
-        echo "<p>Credenciales incorrectas. Por favor, intenta de nuevo.</p>";
+        echo "<p>Correo electrónico no encontrado. Por favor, intenta de nuevo.</p>";
     }
 }
 ?>
