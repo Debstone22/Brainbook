@@ -110,19 +110,6 @@ function obtenerTituloRol($id_rol) {
                                         <ul class="nav navbar-nav flex-row ml-auto">
                                             <?php
                                             /*
-                                            $select = mysqli_query($conn, "SELECT * FROM usuario WHERE id_usuario = '$user_id'") or die('query failed');
-                                            if (mysqli_num_rows($select) > 0) {
-                                                $fetch = mysqli_fetch_assoc($select);
-                                                // Extraer la ruta de la imagen del usuario de la fila obtenida de la base de datos
-                                                $imagen_usuario = $fetch['image'];
-                                            }
-
-                                            // Verificar si la imagen del usuario está vacía o no existe
-                                            if (empty($imagen_usuario)) {
-                                                $imagen_usuario = 'default-avatar.png'; // Imagen por defecto
-                                            } else {
-                                                $imagen_usuario = 'uploaded_img/' . $imagen_usuario;
-                                            }
 
                                             echo '<li class="dropdown nav-item">
                                                         <a class="nav-link" href="#" data-toggle="dropdown">
@@ -130,11 +117,11 @@ function obtenerTituloRol($id_rol) {
                                                             <span class="xp-user-live"></span>
                                                         </a>
                                                         <ul class="dropdown-menu small-menu">
-                                                            <li><a href="/PatitasSOSPiuraOficial/view/perfil.php">
+                                                            <li><a href="perfil.php">
                                                                     <span class="material-icons">person_outline</span>
                                                                     Perfil
                                                                 </a></li>
-                                                            <li><a href="/PatitasSOSPiuraOficial/dataAccess/cerrar_sesion.php">
+                                                            <li><a href="cerrar_sesion.php">
                                                                     <span class="material-icons">logout</span>
                                                                     Cerrar sesión
                                                                 </a></li>
@@ -169,7 +156,7 @@ function obtenerTituloRol($id_rol) {
                                 <div class="table-title">
                                     <div class="row">
                                         <div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-                                            <h2 class="ml-lg-2">Administrar solicitudes de adopción</h2>
+                                            <h2 class="ml-lg-2">Administrar Rubricas</h2>
                                         </div>
                                         <div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
                                         </div>
@@ -189,28 +176,21 @@ function obtenerTituloRol($id_rol) {
                                 $offset = ($pagina_actual - 1) * $registros_por_pagina;
 
                                 // Consulta SQL con límite y offset
-                                $consulta = "SELECT s.id_solicitud, e.id_estado, u.nombres, m.nombre_mascota, e.estado, s.descripcion, s.fecha FROM solicitud as s INNER JOIN usuario as u on s.id_usuario = u.id_usuario 
-                        INNER JOIN bd_mascota as m on s.id_mascota = m.id_mascota
-                        INNER JOIN estado_solicitud as e on s.id_estado = e.id_estado";
-                                $resultado = mysqli_query($conn, $consulta);
+                                
 
                                 // Obtén el número total de registros
-                                $resultado_total = mysqli_query($conn, "SELECT COUNT(*) AS total FROM solicitud");
-                                $row = mysqli_fetch_assoc($resultado_total);
-                                $total_registros = $row['total'];
+                                
 
                                 // Calcula el número total de páginas
-                                $total_paginas = ceil($total_registros / $registros_por_pagina);
+                                
                                 ?>
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Usuario</th>
-                                            <th>Mascota</th>
-                                            <th>Estado</th>
-                                            <th>Descripcion del estado</th>
-                                            <th>Fecha</th>
+                                            <th>Acciones</th>
+                                            <th>Acciones</th>
+                                            <th>Acciones</th>
+                                            <th>Acciones</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -220,9 +200,9 @@ function obtenerTituloRol($id_rol) {
                                         while ($fila = mysqli_fetch_array($resultado)) {
                                             ?>
                                             <tr>
-                                                <td><?php echo $fila['id_solicitud']; ?></td>
-                                                <td><?php echo $fila['nombres']; ?></td>
-                                                <td><?php echo $fila['nombre_mascota']; ?></td>
+                                                <td><?php echo $fila['id']; ?></td>
+                                                <td><?php echo $fila['id']; ?></td>
+                                                <td><?php echo $fila['nombre']; ?></td>
                                                 <td><?php echo $fila['estado']; ?></td>
                                                 <td><?php echo $fila['descripcion']; ?></td>
                                                 <td><?php echo $fila['fecha']; ?></td>
@@ -230,10 +210,10 @@ function obtenerTituloRol($id_rol) {
                                                     <?php
                                                     if ($_SESSION['id_rol'] != 1) {
                                                         ?>
-                                                        <a class="edit" href="admin_solicitudes/detalle.php?id=<?php echo $fila['id_solicitud']; ?>" data-toggle="tooltip" title="Revisar">
+                                                        <a class="edit" href="#editsolicitudmodal">
                                                             <i class="material-icons">visibility</i>
                                                         </a>
-                                                        <a class="delete" href="admin_solicitudes/actualizar_estado.php?id=<?php echo $fila['id_solicitud']; ?>" data-toggle="tooltip" title="Actualizar">
+                                                        <a class="delete" href="#deletesolicitudmodal" title="Actualizar">
                                                             <i class="material-icons">fact_check</i>
                                                         </a>
                                                         <?php
@@ -275,22 +255,9 @@ function obtenerTituloRol($id_rol) {
                     </div>
                 </div>
                 <!------main-content-end-----------> 
-                <!----footer-design------------->
-                 <!----<footer class="footer">
-                    <div class="container-fluid">
-                        <div class="footer-in">
-                            <p class="mb-0">Copyright © 2024 Patitas SOS PIURA | Todos los derechos reservados</p>
-                        </div>
-                    </div>
-                </footer> ------------->
+                
             </div>
         </div>
-<!--        <script>
-            function handleSubmit() {
-                alert("El usuario ha sido creado con éxito.");
-                window.location.href = "../../dashboard/indexUsuarios.php";
-            }
-        </script>-->
         <script src="sources/js/jquery-3.3.1.slim.min.js"></script>
         <script src="sources/js/popper.min.js"></script>
         <script src="sources/js/bootstrap.min.js"></script>

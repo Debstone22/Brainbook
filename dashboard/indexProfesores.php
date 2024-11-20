@@ -127,11 +127,11 @@ function obtenerTituloRol($id_rol) {
                                                             <span class="xp-user-live"></span>
                                                         </a>
                                                         <ul class="dropdown-menu small-menu">
-                                                            <li><a href="/PatitasSOSPiuraOficial/view/perfil.php">
+                                                            <li><a href="/view/perfil.php">
                                                                     <span class="material-icons">person_outline</span>
                                                                     Perfil
                                                                 </a></li>
-                                                            <li><a href="/PatitasSOSPiuraOficial/dataAccess/cerrar_sesion.php">
+                                                            <li><a href="cerrar_sesion.php">
                                                                     <span class="material-icons">logout</span>
                                                                     Cerrar sesión
                                                                 </a></li>
@@ -166,12 +166,12 @@ function obtenerTituloRol($id_rol) {
                                 <div class="table-title">
                                     <div class="row">
                                         <div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-                                            <h2 class="ml-lg-2">Administrar publicaciones</h2>
+                                            <h2 class="ml-lg-2">Administrar Profesores</h2>
                                         </div>
                                         <div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
                                             <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
                                                 <i class="material-icons">&#xE147;</i>
-                                                <span>Agregar nueva publicacion</span>
+                                                <span>Agregar un nuevo Profesor</span>
                                             </a>
 
                                         </div>
@@ -195,7 +195,7 @@ function obtenerTituloRol($id_rol) {
                                 $resultado = mysqli_query($conn, $consulta);
 
                                 // Obtén el número total de registros
-                                $resultado_total = mysqli_query($conn, "SELECT COUNT(*) AS total FROM novedades");
+                                $resultado_total = mysqli_query($conn, "SELECT COUNT(*) AS total FROM profesores");
                                 $row = mysqli_fetch_assoc($resultado_total);
                                 $total_registros = $row['total'];
 
@@ -209,12 +209,6 @@ function obtenerTituloRol($id_rol) {
                                             <th>ID</th>
                                             <th>Tipo</th>
                                             <th>URL Imagen</th>
-                                            <th>Titulo</th>
-                                            <th>Descripción</th>
-                                            <th>Fecha Publicación</th>
-                                            <th>Fecha Evento</th>
-                                            <th>Lugar y Hora</th>
-                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
 
@@ -225,20 +219,18 @@ function obtenerTituloRol($id_rol) {
                                             <tr>
                                                 <td><?php echo $fila['id']; ?></td>
                                                 <td><?php echo mb_strtolower($fila['tipo']); ?></td>
-                                                <td><?php echo truncateString($fila['img'], 8); ?></td>
-                                                <td><?php echo truncateString($fila['titulo'], 10); ?></td>
-                                                <td><?php echo truncateString($fila['descripcion'], 10); ?></td>
-                                                <td><?php echo $fila['fecha_publicacion']; ?></td>
-                                                <td><?php echo $fila['fecha_evento']; ?></td>
-                                                <td><?php echo truncateString($fila['lugar_hora'], 10); ?></td>
+                                                <td><?php echo truncateString($fila['nombre'], 8); ?></td>
+                                                <td><?php echo truncateString($fila['edad'], 10); ?></td>
+                                                <td><?php echo truncateString($fila['descripcon'], 10); ?></td>
+                                                <td><?php echo $fila['universidad']; ?></td>
                                                 <td>
                                                     <?php
                                                     if ($_SESSION['id_rol'] != 1) {
                                                         ?>
-                                                        <a class="edit" href="admin_noticias_eventos/editar_publicacion.php?id=<?php echo $fila['id']; ?>" data-toggle="tooltip" title="Edit">
+                                                        <a class="edit" href="#editprofesoremodal>" data-toggle="tooltip" title="Edit">
                                                             <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                                                         </a>
-                                                        <a class="delete" href="admin_noticias_eventos/eliminar_publicacion.php?id=<?php echo $fila['id']; ?>" data-toggle="tooltip" title="Delete">
+                                                        <a class="delete" href="deleteprofesoremodal" data-toggle="tooltip" title="Delete">
                                                             <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
                                                         </a>
                                                         <?php
@@ -286,92 +278,15 @@ function obtenerTituloRol($id_rol) {
                                 </div>                            
                             </div>
                         </div>
-                        <!-- Modal de Crear Publicación -->
-                        <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="addEmployeeModalLabel">Crear Publicación</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <form id="agregarNovedadForm" action="admin_noticias_eventos/funciones.php" method="POST" enctype="multipart/form-data">
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="tipo" class="form-label">Tipo de novedad:</label>
-                                                <select id="tipo" name="tipo" class="form-control" required>
-                                                    <option value="EVENTO">Evento</option>
-                                                    <option value="NOTICIA">Noticia</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="img" class="form-label">URL de la imagen:</label>
-                                                <input type="text" id="img" name="img" class="form-control" required oninput="loadImagePreview()">
-                                                <div class="text-center mt-3">
-                                                    <img id="imagePreview" src="" alt="Vista previa de la imagen" style="width: 340px; display: none;">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="titulo" class="form-label">Título:</label>
-                                                <input type="text" id="titulo" name="titulo" class="form-control" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="descripcion" class="form-label">Descripción(Max 300 caracteres):</label>
-                                                <textarea id="descripcion" name="descripcion" class="form-control" required maxlength="300" required></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fecha_publicacion" class="form-label">Fecha de publicación:</label>
-                                                <input type="date" id="fecha_publicacion" name="fecha_publicacion" class="form-control" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fecha_evento" class="form-label">Fecha del evento:</label>
-                                                <input type="date" id="fecha_evento" name="fecha_evento" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="lugar_hora" class="form-label">Lugar/Hora:</label>
-                                                <input type="text" id="lugar_hora" name="lugar_hora" class="form-control">
-                                            </div>
-                                            <!-- Otros campos -->
-                                            <input type="hidden" name="action" value="crear_registro">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                            <button type="submit" onclick="handleSubmit()" class="btn btn-success">Agregar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!----add-modal end--------->
-
-                        <!----edit-modal start--------->
-
-                        <!----edit-modal end--------->
-
-                        <!----delete-modal start--------->
+                        <!-- Modal de Crear Profesores -->
 
                         <!----delete-modal end--------->   
                     </div>
                 </div>
                 <!------main-content-end-----------> 
-                <!----footer-design------------->
-                 <!----<footer class="footer">
-                    <div class="container-fluid">
-                        <div class="footer-in">
-                            <p class="mb-0">Copyright © 2024 Patitas SOS PIURA | Todos los derechos reservados</p>
-                        </div>
-                    </div>
-                </footer> ------------->
+                
             </div>
         </div>
-<!--        <script>
-            function handleSubmit() {
-                alert("La publicación ha sido creada con éxito.");
-                window.location.href = "../../dashboard/indexPublicaciones.php";
-            }
-        </script>-->
         <!-------complete html----------->
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -9,9 +9,20 @@ $conn = $database->getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $busqueda = htmlspecialchars($_POST['busqueda']);
-    $query = "SELECT * FROM usuarios WHERE nombre LIKE :busqueda OR apellido LIKE :busqueda OR email LIKE :busqueda";
+
+    // Si no hay término de búsqueda, selecciona todos los usuarios
+    if (empty($busqueda)) {
+        $query = "SELECT * FROM usuarios";
+    } else {
+        $query = "SELECT * FROM usuarios WHERE nombre LIKE :busqueda OR apellido LIKE :busqueda OR email LIKE :busqueda";
+    }
+
     $stmt = $conn->prepare($query);
-    $stmt->bindValue(':busqueda', '%' . $busqueda . '%');
+
+    if (!empty($busqueda)) {
+        $stmt->bindValue(':busqueda', '%' . $busqueda . '%');
+    }
+
     $stmt->execute();
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -25,7 +36,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $output .= '<td>' . htmlspecialchars($fila['email']) . '</td>';
         $output .= '<td>' . htmlspecialchars($fila['edad']) . '</td>';
         $output .= '<td>' . htmlspecialchars($fila['celular']) . '</td>';
-        $output .= '<td>' . htmlspecialchars($fila['nombre_rol']) . '</td>';
+
+        // Convertir ID de rol a nombre de rol $roleName = ''; 
+        switch ($fila['id_rol']) {
+            case 1:
+                $roleName = 'Usuario';
+                break;
+            case 2:
+                $roleName = 'Profesor';
+                break;
+            case 3:
+                $roleName = 'Administrador';
+                break;
+            default:
+                $roleName = 'Desconocido';
+                break;
+        }
+        $output .= '<td>' . htmlspecialchars($roleName) . '</td>';
         $output .= '<td align="center">';
         if ($_SESSION['rol'] == 3 && $fila['id_rol'] != 3) {
             $output .= '<a class="edit" href="#editEmployeeModal" data-toggle="modal"';
@@ -51,3 +78,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo $output;
 }
 ?>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const editButtons = document.querySelectorAll('.edit');
+        const deleteButtons = document.querySelectorAll('.delete');
+
+        //rellenar el formulario de editar con los datos de la fila
+        editButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const userId = button.getAttribute('data-id');
+                const userNombres = button.getAttribute('data-nombres');
+                const userApellidos = button.getAttribute('data-apellidos');
+                const userEdad = button.getAttribute('data-edad');
+                const userTelefono = button.getAttribute('data-telefono');
+                const userEmail = button.getAttribute('data-email');
+                const userRol = button.getAttribute('data-rol');
+
+                console.log(userEmail); // log para verificar xd
+                console.log(userRol); // log para verificar xd
+
+                document.getElementById('editNombres').value = userNombres;
+                document.getElementById('editApellidos').value = userApellidos;
+                document.getElementById('editEdad').value = userEdad;
+                document.getElementById('editTelefono').value = userTelefono;
+                document.getElementById('editEmail').value = userEmail;
+                document.getElementById('editRol').value = userRol;
+                document.getElementById('editId').value = userId;
+
+                let userIdInput = document.getElementById('user_id_input');
+                if (!userIdInput) {
+                    userIdInput = document.createElement('input');
+                    userIdInput.type = 'hidden';
+                    userIdInput.id = 'user_id_input';
+                    userIdInput.name = 'id_usuario';
+                    document.getElementById('crearUsuarioForm').appendChild(userIdInput);
+                }
+                userIdInput.value = userId;
+            });
+        });
+
+        //rellenar el formulario de editar con los datos de la fila
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const deleteUserId = button.getAttribute('data-id');
+                console.log("recibi la informacion para borrar")
+                console.log(deleteUserId); // log para verificar xd
+
+                document.getElementById('borrarId').value = deleteUserId;
+            });
+        });
+    });
+</script>

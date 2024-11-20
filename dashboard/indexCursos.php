@@ -1,29 +1,24 @@
 <!doctype html>
 <?php
-include '../config/Database.php';
-global $conn;
-session_start();
-error_reporting(0);
-$user_id = $_SESSION['idUser'];
-$user_name = $_SESSION['nombreUser'];
-$pagina_actual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
-$validar = $_SESSION['nombreUser'];
-
-/*if ($validar == null || $validar = '') {
-    header("Location: ../index.php");
-    die();
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Brainbook/config/Database.php';
+session_start(); // Crear instancia de la clase Database y obtener la conexión
+$database = new Database();
+$conn = $database->getConnection(); // Verifica si el usuario ha iniciado sesión 
+if (isset($_SESSION['usuario'])) {
+    $nombre_usuario = $_SESSION['usuario'];
+    $rol_usuario = $_SESSION['rol']; // Verifica si el usuario tiene el rol adecuado (rol 3 en este caso)A
+    if ($rol_usuario != 3) { // Si el usuario no tiene rol 3, redirige a una página de acceso denegado 
+        header("Location: ../views/index.php");
+        exit();
+    }
+} else { // Si el usuario no ha iniciado sesión, redirige a la página de login 
+    header("Location: ../views/index.php");
+    exit();
 }
 
-$validarID = $_SESSION['id_rol'];
-
-if ($validarID === 1) {
-    header("Location: ../index.php");
-    die();
-}*/
-
-
-function obtenerTituloRol($id_rol) {
-    switch ($id_rol) {
+function obtenerTituloRol($rol_usuario)
+{
+    switch ($rol_usuario) {
         case 1:
             return 'Usuario';
         case 2:
@@ -36,31 +31,66 @@ function obtenerTituloRol($id_rol) {
 }
 ?>
 <html lang="es">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-        <title>Administración</title>
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="../dashboard/sources/css/bootstrap.min.css">
-        <!----css3---->
-        <link rel="stylesheet" href="../dashboard/sources/css/custom.css">
-        <!--google fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-        <!--google material icon-->
-        <link href="https://fonts.googleapis.com/css2?family=Material+Icons"rel="stylesheet">
-    </head>
-    <body>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>Administración</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../dashboard/sources/css/bootstrap.min.css">
+    <!----css3---->
+    <link rel="stylesheet" href="../dashboard/sources/css/custom.css">
+    <!--google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!--google material icon-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        /* modal para agregar usuario */
+        .modal-content {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 20);
+
+        }
+
+        .form-control {
+            border: 2px solid #007bff;
+        }
+
+        /* estilos para las waves del footer*/
+        .bg-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('wavi.svg') no-repeat center center/cover;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-svg">
         <div class="wrapper">
             <div class="body-overlay"></div>
             <!-------sidebar--design------------>
             <div id="sidebar">
                 <div class="sidebar-header">
                     <a href="../views/index.php">
-                        <h3><img src="logobrainbook.jpeg" class="img-fluid"/><span>BrainBook</span></h3>
+                        <h3><img src="logobrainbook.jpeg" class="img-fluid" /><span>BrainBook</span></h3>
                     </a>
                 </div>
                 <ul class="list-unstyled component m-0">
@@ -74,71 +104,51 @@ function obtenerTituloRol($id_rol) {
                         <a href="indexCursos.php" class=""><i class="material-icons">collections_bookmark</i>Cursos</a>
                     </li>
                     <li class="">
-                        <a href="indexSolicitudes.php" class=""><i class="material-icons">chrome_reader_mode</i>Rubricas</a>
+                        <a href="indexSolicitudes.php" class=""><i
+                                class="material-icons">chrome_reader_mode</i>Rubricas</a>
                     </li>
                 </ul>
             </div>
             <!-------sidebar--design- close----------->
             <!-------page-content start----------->
             <div id="content">
-                <!------top-navbar-start-----------> 
+                <!------top-navbar-start----------->
                 <div class="top-navbar">
                     <div class="xd-topbar">
                         <div class="row">
                             <div class="col-2 col-md-1 col-lg-1 order-2 order-md-1 align-self-center">
-                                <div class="xp-menubar">
-                                    <span class="material-icons text-white">signal_cellular_alt</span>
+                                <div class="xp-menubar"> <span
+                                        class="material-icons text-white">signal_cellular_alt</span>
                                 </div>
                             </div>
                             <div class="col-md-5 col-lg-3 order-3 order-md-2">
                                 <div class="xp-searchbar">
-                                    <form action="admin_mascotas/buscar_mascota.php" method="POST">
-                                        <div class="input-group">
-                                            <input type="search" name="busqueda" class="form-control" placeholder="Buscar por nombre..." value="<?php echo isset($_POST['busqueda']) ? htmlspecialchars($_POST['busqueda'], ENT_QUOTES) : ''; ?>">
-                                            <div class="input-group-append">
-                                                <button class="btn" type="submit" id="button-addon2">🔎</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    <div class="input-group">
+                                        <input type="search" id="busqueda" class="form-control" placeholder="Buscar...">
+                                        <div class="input-group-append"> <button class="btn" type="submit"
+                                                id="button-addon2">🔎</button> </div>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                                 <div class="xp-profilebar text-right">
                                     <nav class="navbar p-0">
                                         <ul class="nav navbar-nav flex-row ml-auto">
-                                            <?php
-                                            /*
-                                            $select = mysqli_query($conn, "SELECT * FROM usuario WHERE id_usuario = '$user_id'") or die('query failed');
-                                            if (mysqli_num_rows($select) > 0) {
-                                                $fetch = mysqli_fetch_assoc($select);
-                                                // Extraer la ruta de la imagen del usuario de la fila obtenida de la base de datos
-                                                $imagen_usuario = $fetch['image'];
-                                            }
-
-                                            // Verificar si la imagen del usuario está vacía o no existe
-                                            if (empty($imagen_usuario)) {
-                                                $imagen_usuario = 'default-avatar.png'; // Imagen por defecto
-                                            } else {
-                                                $imagen_usuario = 'uploaded_img/' . $imagen_usuario;
-                                            }
-
-                                            echo '<li class="dropdown nav-item">
-                                                        <a class="nav-link" href="#" data-toggle="dropdown">
-                                                            <img src="../assets/img/' . $imagen_usuario . '" style="width:40px; border-radius:50%;"/>
-                                                            <span class="xp-user-live"></span>
-                                                        </a>
-                                                        <ul class="dropdown-menu small-menu">
-                                                            <li><a href="/PatitasSOSPiuraOficial/view/perfil.php">
-                                                                    <span class="material-icons">person_outline</span>
-                                                                    Perfil
-                                                                </a></li>
-                                                            <li><a href="/PatitasSOSPiuraOficial/dataAccess/cerrar_sesion.php">
-                                                                    <span class="material-icons">logout</span>
-                                                                    Cerrar sesión
-                                                                </a></li>
-                                                        </ul>
-                                                      </li>';*/
-                                            ?>
+                                            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#"
+                                                    id="navbarDropdown" role="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false"> <img
+                                                        src="logobrainbook.jpeg"
+                                                        style="width:40px; border-radius:50%;" />
+                                                    <span class="xp-user-live"></span> </a>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="navbarDropdown"> <a class="dropdown-item"
+                                                        href="perfil.php"> <span
+                                                            class="material-icons">person_outline</span> Perfil </a> <a
+                                                        class="dropdown-item" href="../views/logout.php"> <span
+                                                            class="material-icons">logout</span> Cerrar sesión </a>
+                                                </div>
+                                            </li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -146,20 +156,16 @@ function obtenerTituloRol($id_rol) {
                         </div>
                         <div class="xp-breadcrumbbar text-center">
                             <h4 class="page-title">Dashboard</h4>
-                            <?php
-                            if (isset($_SESSION['nombreUser']) && isset($_SESSION['id_rol'])) {
-                                $titulo_rol = obtenerTituloRol($_SESSION['id_rol']);
-                                echo '<ol class="breadcrumb">
-                                    <li class="breadcrumb-item active">Bienvenido</li>
-                                    <li class="breadcrumb-item active" aria-current="page">' . $titulo_rol . ' ' . $_SESSION['nombreUser'] . '</li>
-                                  </ol>';
-                            }
-                            ?>
+                            <?php //obtiene el titulo y el rol del usuario activo
+                            if (isset($_SESSION['usuario']) && isset($_SESSION['rol'])) {
+                                $titulo_rol = obtenerTituloRol($_SESSION['rol']);
+                                echo '<ol class="breadcrumb"> <li class="breadcrumb-item active">Bienvenido</li> <li class="breadcrumb-item active" aria-current="page">' . $titulo_rol . ' ' . htmlspecialchars($nombre_usuario) . '</li> </ol>';
+                            } ?>
                         </div>
                     </div>
-                </div>
-                <!------top-navbar-end-----------> 
-                <!------main-content-start-----------> 
+                </div> <!------top-navbar-end----------->
+                <!------top-navbar-end----------->
+                <!------main-content-start----------->
                 <div class="main-content">
                     <div class="row">
                         <div class="col-md-12">
@@ -167,311 +173,242 @@ function obtenerTituloRol($id_rol) {
                                 <div class="table-title">
                                     <div class="row">
                                         <div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-                                            <h2 class="ml-lg-2">Administrar mascotas</h2>
+                                            <h2 class="ml-lg-2">Administrar Cursos</h2>
                                         </div>
                                         <div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
                                             <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
                                                 <i class="material-icons">&#xE147;</i>
-                                                <span>Agregar nueva mascota</span>
+                                                <span>Agregar nueva Curso</span>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <?php
-                                // Configuración de paginación
-                                $registros_por_pagina = 5;
 
+                                <?php // Configuración de la paginación 
+                                $registros_por_pagina = 5; 
                                 if (isset($_GET['pagina'])) {
                                     $pagina_actual = $_GET['pagina'];
                                 } else {
                                     $pagina_actual = 1;
-                                }
-
-                                // Calcula el offset
-                                $offset = ($pagina_actual - 1) * $registros_por_pagina;
-
-                                // Consulta SQL con límite y offset
-                                $consulta = "SELECT bd_mascota.id_mascota, 
-                                                        bd_mascota.nombre_mascota, 
-                                                        bd_mascota.fecha_nacimiento, 
-                                                        bd_mascota.sexo, 
-                                                        bd_mascota.largo_pelo, 
-                                                        bd_mascota.tamano, 
-                                                        bd_mascota.esterilizado, 
-                                                        bd_mascota.peso, 
-                                                        bd_especie.nombre_especie AS nombre_especie, 
-                                                        bd_mascota.descripcion, 
-                                                        bd_mascota.foto_mascota, 
-                                                        bd_mascota.estado_adopcion, 
-                                                        bd_mascota.estado_medico 
-                                                 FROM bd_mascota 
-                                                 INNER JOIN bd_especie ON bd_mascota.id_especie = bd_especie.id_especie
-                                                  LIMIT $offset, $registros_por_pagina";
-
-                                $resultado = mysqli_query($conn, $consulta);
-
-                                // Obtén el número total de registros
-                                $resultado_total = mysqli_query($conn, "SELECT COUNT(*) AS total FROM bd_mascota");
-                                $row = mysqli_fetch_assoc($resultado_total);
-                                $total_registros = $row['total'];
-
-                                // Calcula el número total de páginas
-                                $total_paginas = ceil($total_registros / $registros_por_pagina);
-                                ?>
-
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Especie</th>
-<!--                                            <th>URL Imagen</th>-->
-                                            <th>Nombre</th>
-                                            <th>Fecha de Nacimiento</th>
-                                            <th>Sexo</th>
-                                            <th>Peso (KG)</th>
-                                            <th>Tamaño</th>
-                                            <th>Esterili...</th>
-                                            <th>Largo de pelo</th>
-                                            <th>Estado médico</th>
-<!--                                            <th>Descripción</th>-->
-                                            <th>Estado adopción</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody id="employeeTable">
-                                        <?php
-                                        while ($fila = mysqli_fetch_array($resultado)) {
-                                            ?>
+                                } // Calcula el offset 
+                                $offset = ($pagina_actual - 1) * $registros_por_pagina; // Crear instancia de la clase Database y obtener la conexión 
+                                require_once $_SERVER['DOCUMENT_ROOT'] . '/Brainbook/config/Database.php';
+                                $database = new Database();
+                                $conn = $database->getConnection(); // Consulta SQL con límite y offset para la paginación 
+                                $consulta = "SELECT cursos.id_curso, cursos.nombre_curso, cursos.descripcion, cursos.status, cursos.version, cursos.imagen, (SELECT COUNT(*) FROM curso_estudiante WHERE curso_estudiante.id_curso = cursos.id_curso) AS usuarios_inscritos FROM cursos LIMIT :offset, :registros_por_pagina";
+                                $stmt = $conn->prepare($consulta);
+                                $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+                                $stmt->bindParam(':registros_por_pagina', $registros_por_pagina, PDO::PARAM_INT);
+                                $stmt->execute();
+                                $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC); // Se obtiene el número total de registros 
+                                $resultado_total = $conn->query("SELECT COUNT(*) AS total FROM cursos");
+                                $row_total = $resultado_total->fetch(PDO::FETCH_ASSOC);
+                                $total_registros = $row_total['total']; // Calcula el número total de páginas 
+                                $total_paginas = ceil($total_registros / $registros_por_pagina); ?>
+                                    <table class="table table-striped table-hover">
+                                        <thead>
                                             <tr>
-                                                <td><?php echo truncateString($fila['id_mascota'], 8); ?></td>
-                                                <td><?php echo truncateString($fila['nombre_especie'], 8); ?></td>
-    <!--                                                <td><?php // echo truncateString($fila['foto_mascota'], 8);  ?></td>-->
-                                                <td><?php echo truncateString($fila['nombre_mascota'], 8); ?></td>
-                                                <td><?php echo truncateString($fila['fecha_nacimiento'], 11); ?></td>
-                                                <td><?php echo truncateString($fila['sexo'], 8); ?></td>
-                                                <td><?php echo truncateString($fila['peso'], 8); ?></td>
-                                                <td><?php echo truncateString($fila['tamano'], 8); ?></td>
-                                                <td><?php echo $fila['esterilizado'] == 1 ? 'Si' : 'No'; ?></td>
-                                                <td><?php echo truncateString($fila['largo_pelo'], 8); ?></td>
-                                                <td><?php echo truncateString($fila['estado_medico'], 6); ?></td>
-    <!--                                                <td><?php // echo truncateString($fila['descripcion'], 8);  ?></td>-->
-                                                <td><?php echo $fila['estado_adopcion'] == 0 ? 'Libre' : 'Adoptado'; ?></td>
-                                                <td>
-                                                    <?php
-                                                    if ($_SESSION['id_rol'] != 1) {
-                                                        ?>
-                                                        <a class="edit" href="admin_mascotas/editar_mascota.php?id=<?php echo $fila['id_mascota']; ?>" data-toggle="tooltip" title="Edit">
-                                                            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-                                                        </a>
-                                                        <a class="delete" href="admin_mascotas/eliminar_mascota.php?id=<?php echo $fila['id_mascota']; ?>" data-toggle="tooltip" title="Delete">
-                                                            <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                                                        </a>
-                                                        <?php
-                                                    } else {
-                                                        echo '';
-                                                    }
-                                                    ?>
-                                                </td>
+                                                <th>ID</th>
+                                                <th>Nombre del Curso</th>
+                                                <th>Descripción</th>
+                                                <th>Status</th>
+                                                <th>Versión</th>
+                                                <th>Imagen</th>
+                                                <th>Acciones</th>
                                             </tr>
-                                            <?php
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-                                <?php
+                                        </thead>
+                                        <tbody id="courseTable"> <?php foreach ($resultado as $fila) { ?>
+                                                <tr>
+                                                    <td><?php echo htmlspecialchars($fila['id_curso']); ?></td>
+                                                    <td><?php echo htmlspecialchars($fila['nombre_curso']); ?></td>
+                                                    <td><?php echo htmlspecialchars($fila['descripcion']); ?></td>
+                                                    <td><?php echo htmlspecialchars($fila['status']); ?></td>
+                                                    <td><?php echo htmlspecialchars($fila['version']); ?></td>
+                                                    <td> <?php if (!empty($fila['imagen'])) { // Codificar datos binarios de la imagen en base64 
+                                                                $imagenData = base64_encode($fila['imagen']); // Determinar el tipo MIME de la imagen 
+                                                                $finfo = new finfo(FILEINFO_MIME_TYPE);
+                                                                $mimeType = $finfo->buffer($fila['imagen']);
+                                                                echo '<img src="data:' . $mimeType . ';base64,' . $imagenData . '" alt="Imagen del Curso" width="50" height="50">';
+                                                            } else {
+                                                                echo 'No hay imagen';
+                                                            } ?>
+                                                    </td>
+                                                    <td align="center"> <!-- Botones de editar y eliminar --> <a
+                                                            class="edit" href="#editCourseModal" data-toggle="modal"
+                                                            data-id="<?php echo htmlspecialchars($fila['id_curso']); ?>"
+                                                            data-nombre="<?php echo htmlspecialchars($fila['nombre_curso']); ?>"
+                                                            data-descripcion="<?php echo htmlspecialchars($fila['descripcion']); ?>"
+                                                            data-status="<?php echo htmlspecialchars($fila['status']); ?>"
+                                                            data-version="<?php echo htmlspecialchars($fila['version']); ?>"
+                                                            data-imagen="<?php echo htmlspecialchars($fila['imagen']); ?>">
+                                                            <i class="material-icons" data-toggle="tooltip"
+                                                                title="Edit">&#xE254;</i> </a> <a class="delete"
+                                                            href="#deleteCourseModal" data-toggle="modal"
+                                                            data-id="<?php echo htmlspecialchars($fila['id_curso']); ?>"> <i
+                                                                class="material-icons" data-toggle="tooltip"
+                                                                title="Delete">&#xE872;</i> </a> </td>
+                                                </tr> <?php } ?>
+                                        </tbody>
+                                    </table>
+                                    <!-- Paginación -->
+                                    <div class="clearfix">
+                                        <div class="hint-text">Mostrando
+                                            <b><?php echo min(count($resultado), $registros_por_pagina); ?></b> de
+                                            <b><?php echo $total_registros; ?></b>
+                                        </div>
+                                        <ul class="pagination">
+                                            <?php if ($pagina_actual > 1): ?>
+                                                <li class="page-item"><a href="?pagina=<?php echo $pagina_actual - 1; ?>"
+                                                        class="page-link">Atrás</a></li>
+                                            <?php else: ?>
+                                                <li class="page-item disabled"><a href="#" class="page-link">Atrás</a></li>
+                                            <?php endif; ?>
+                                            <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                                                <li class="page-item <?php echo $i == $pagina_actual ? 'active' : ''; ?>">
+                                                    <a href="?pagina=<?php echo $i; ?>"
+                                                        class="page-link"><?php echo $i; ?></a>
+                                                </li>
+                                            <?php endfor; ?>
+                                            <?php if ($pagina_actual < $total_paginas): ?>
+                                                <li class="page-item"><a href="?pagina=<?php echo $pagina_actual + 1; ?>"
+                                                        class="page-link">Siguiente</a></li>
+                                            <?php else: ?>
+                                                <li class="page-item disabled"><a href="#" class="page-link">Siguiente</a>
+                                                </li>
+                                            <?php endif; ?>
+                                        </ul>
+                                    </div>
 
-                                // Función para truncar una cadena a una longitud específica
-                                function truncateString($string, $length) {
-                                    if (strlen($string) > $length) {
-                                        $string = substr($string, 0, $length) . '...';
-                                    }
-                                    return $string;
-                                }
-                                ?>
-                                <!-- Paginación -->
-                                <div class="clearfix">
-                                    <div class="hint-text">Mostrando <b><?php echo min(mysqli_num_rows($resultado), $registros_por_pagina); ?></b> de <b><?php echo $total_registros; ?></b></div>
-                                    <ul class="pagination">
-                                        <?php if ($pagina_actual > 1): ?>
-                                            <li class="page-item"><a href="?pagina=<?php echo $pagina_actual - 1; ?>" class="page-link">Atrás</a></li>
-                                        <?php else: ?>
-                                            <li class="page-item disabled"><a href="#" class="page-link">Atrás</a></li>
-                                        <?php endif; ?>
-
-                                        <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
-                                            <li class="page-item <?php echo $i == $pagina_actual ? 'active' : ''; ?>"><a href="?pagina=<?php echo $i; ?>" class="page-link"><?php echo $i; ?></a></li>
-                                        <?php endfor; ?>
-
-                                        <?php if ($pagina_actual < $total_paginas): ?>
-                                            <li class="page-item"><a href="?pagina=<?php echo $pagina_actual + 1; ?>" class="page-link">Siguiente</a></li>
-                                        <?php else: ?>
-                                            <li class="page-item disabled"><a href="#" class="page-link">Siguiente</a></li>
-                                        <?php endif; ?>
-                                    </ul>
-                                </div>                            
                             </div>
                         </div>
-                        <!-- Modal de Crear MASCOTA -->
-                        <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                        <!-- Modal Agregar curso -->
+
+
+                        <!-- Modal para editar Curso -->
+                        <div class="modal fade" id="editCourseModal" tabindex="-1" role="dialog"
+                            aria-labelledby="editCourseModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="addEmployeeModalLabel">Crear Publicación</h5>
+                                        <h5 class="modal-title" id="editCourseModalLabel">Editar Cursoasd</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form id="agregarMascotaForm" action="admin_mascotas/funciones.php" method="POST" enctype="multipart/form-data">
+                                    <form id="editarCursoForm" action="admin_cursos/editar_curso.php" method="POST"
+                                        enctype="multipart/form-data">
                                         <div class="modal-body">
+                                            <!-- input ID oculto para enviarlo a editar_Curso -->
+                                            <input type="hidden" id="editId" name="editId" class="form-control">
                                             <div class="form-group">
-                                                <label for="id_especie" class="form-label">Especie:</label>
-                                                <select id="id_especie" name="id_especie" class="form-control" required>
-                                                    <option value="1">Gato</option>
-                                                    <option value="2">Perro</option>
-                                                </select>
+                                                <label for="nombre_curso" class="form-label">Nombre del Curso:</label>
+                                                <input type="text" id="editNombreCurso" name="nombre_curso"
+                                                    class="form-control" required>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="foto_mascota" class="form-label">URL de la imagen:</label>
-                                                <input type="text" id="foto_mascota" name="foto_mascota" class="form-control" required oninput="loadImagePreview()">
-                                                <div class="text-center mt-3">
-                                                    <img id="imagePreview" src="" alt="Vista previa de la imagen" style="width: 340px; display: none;">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="sexo" class="form-label">Sexo:</label>
-                                                <select id="sexo" name="sexo" class="form-control" required>
-                                                    <option value="Macho">Macho</option>
-                                                    <option value="Hembra">Hembra</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="nombre_mascota" class="form-label">Nombre:</label>
-                                                <input type="text" id="nombre_mascota" name="nombre_mascota" class="form-control" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento:</label>
-                                                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control">
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label for="largo_pelo" class="form-label">Largo de pelo:</label>
-                                                <select id="largo_pelo" name="largo_pelo" class="form-control" required>
-                                                    <option value="Corto">Corto</option>
-                                                    <option value="Mediano">Mediano</option>
-                                                    <option value="Largo">Largo</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="tamano" class="form-label">Tamaño:</label>
-                                                <select id="tamano" name="tamano" class="form-control" required>
-                                                    <option value="Pequeño">Pequeño</option>
-                                                    <option value="Mediano">Mediano</option>
-                                                    <option value="Grande">Grande</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="esterilizado" class="form-label">Esterilizado:</label>
-                                                <select id="esterilizado" name="esterilizado" class="form-control" required>
-                                                    <option value="1">Si</option>
-                                                    <option value="0">No</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="peso" class="form-label">Peso (en KG):</label>
-                                                <input type="number" id="peso" name="peso" class="form-control" step="0.01" required>
-                                            </div>
-                                            
                                             <div class="form-group">
                                                 <label for="descripcion" class="form-label">Descripción:</label>
-                                                <textarea id="descripcion" name="descripcion" class="form-control"></textarea>
+                                                <textarea id="editDescripcion" name="descripcion" class="form-control"
+                                                    required></textarea>
                                             </div>
-                                            
                                             <div class="form-group">
-                                                <label for="estado_medico" class="form-label">Estado médico:</label>
-                                                <textarea id="estado_medico" name="descripcion" class="form-control"></textarea>
+                                                <label for="status" class="form-label">Status:</label>
+                                                <input type="text" id="editStatus" name="status" class="form-control"
+                                                    required>
                                             </div>
-                                            
-                                            <!-- Otros campos -->
-                                            <input type="hidden" name="action" value="crear_registro">
+                                            <div class="form-group">
+                                                <label for="version" class="form-label">Versión:</label>
+                                                <input type="text" id="editVersion" name="version" class="form-control"
+                                                    required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="imagen" class="form-label">Imagen:</label>
+                                                <input type="file" id="editImagen" name="imagen" class="form-control"
+                                                    accept="image/png, image/jpeg, image/jpg" required>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                            <button type="submit" onclick="handleSubmit()" class="btn btn-success">Agregar</button>
+                                            <button type="submit" class="btn btn-success">Guardar</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        <!----add-modal end--------->
+                        <!----modal para eliminar curso--------->
 
-                        <!----edit-modal start--------->
-
-                        <!----edit-modal end--------->
-
-                        <!----delete-modal start--------->
-
-                        <!----delete-modal end--------->   
+                        
                     </div>
                 </div>
-                <!------main-content-end-----------> 
-                <!----footer-design------------->
-                 <!----<footer class="footer">
-                    <div class="container-fluid">
-                        <div class="footer-in">
-                            <p class="mb-0">Copyright © 2024 Patitas SOS PIURA | Todos los derechos reservados</p>
-                        </div>
-                    </div>
-                </footer> ------------->
+                <!------main-content-end----------->
             </div>
         </div>
         <!-------complete html----------->
-        <!-- Optional JavaScript -->
-<!--        <script>
-            function handleSubmit() {
-                alert("La mascota ha sido creada con éxito.");
-                window.location.href = "../../dashboard/indexMascotas.php";
-            }
-        </script>-->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="sources/js/jquery-3.3.1.slim.min.js"></script>
         <script src="sources/js/popper.min.js"></script>
         <script src="sources/js/bootstrap.min.js"></script>
         <script src="sources/js/jquery-3.3.1.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', (event) => {
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('fecha_publicacion').value = today;
-            });
-        </script>
-        <script type="text/javascript">
-            function loadImagePreview() {
-                var imageUrl = document.getElementById('foto_mascota').value;
-                var imagePreview = document.getElementById('imagePreview');
-
-                if (imageUrl) {
-                    imagePreview.src = imageUrl;
-                    imagePreview.style.display = 'block';
-                } else {
-                    imagePreview.style.display = 'none';
-                }
-            }
-        </script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".xp-menubar").on('click', function () {
                     $("#sidebar").toggleClass('active');
                     $("#content").toggleClass('active');
                 });
-
                 $('.xp-menubar,.body-overlay').on('click', function () {
                     $("#sidebar,.body-overlay").toggleClass('show-nav');
                 });
 
             });
         </script>
+        <script>
+            $(document).ready(function () {
+                function attachEvents() {
+                    const editButtons = document.querySelectorAll('.edit');
+                    const deleteButtons = document.querySelectorAll('.delete');
 
-    </body>
+                    editButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const cursoId = button.getAttribute('data-id');
+                            const cursoNombre = button.getAttribute('data-nombre');
+                            const cursoDescripcion = button.getAttribute('data-descripcion');
+                            const cursoStatus = button.getAttribute('data-status');
+                            const cursoVersion = button.getAttribute('data-version');
+                            const cursoImagen = button.getAttribute('data-imagen');
+                            const cursoIdUsuario = button.getAttribute('data-id_usuario');
+
+                            document.getElementById('editId').value = cursoId;
+                            document.getElementById('editNombreCurso').value = cursoNombre;
+                            document.getElementById('editDescripcion').value = cursoDescripcion;
+                            document.getElementById('editStatus').value = cursoStatus;
+                            document.getElementById('editVersion').value = cursoVersion;
+                            document.getElementById('editImagen').value = '';
+
+                            // Comprueba si el elemento existe antes de intentar establecer su valor
+                            const idUsuarioInput = document.getElementById('editIdUsuario');
+                            if (idUsuarioInput) {
+                                idUsuarioInput.value = cursoIdUsuario;
+                            } else {
+                                console.warn('El elemento con ID "editIdUsuario" no existe en el DOM.');
+                            }
+                        });
+                    });
+
+                    deleteButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const deleteCursoId = button.getAttribute('data-id');
+                            console.log(deleteCursoId); // Para depuración
+
+                            document.getElementById('deleteId').value = deleteCursoId;
+                        });
+                    });
+                }
+
+                // Inicializar los eventos al cargar la página
+                attachEvents();
+            });
+        </script>
+
+
+</body>
+
 </html>
-

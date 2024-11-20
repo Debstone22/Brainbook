@@ -127,7 +127,7 @@ function obtenerTituloRol($rol_usuario)
                         <div class="col-md-5 col-lg-3 order-3 order-md-2">
                             <div class="xp-searchbar">
                                 <div class="input-group">
-                                    <input type="search" name="busqueda" class="form-control" placeholder="Buscar...">
+                                    <input type="search" id="busqueda" class="form-control" placeholder="Buscar...">
                                     <div class="input-group-append"> <button class="btn" type="submit"
                                             id="button-addon2">🔎</button> </div>
                                 </div>
@@ -145,10 +145,9 @@ function obtenerTituloRol($rol_usuario)
                                                 <span class="xp-user-live"></span> </a>
                                             <div class="dropdown-menu dropdown-menu-right"
                                                 aria-labelledby="navbarDropdown"> <a class="dropdown-item"
-                                                    href="/PatitasSOSPiuraOficial/view/perfil.php"> <span
+                                                    href="perfil.php"> <span
                                                         class="material-icons">person_outline</span> Perfil </a> <a
-                                                    class="dropdown-item"
-                                                    href="/PatitasSOSPiuraOficial/dataAccess/cerrar_sesion.php"> <span
+                                                    class="dropdown-item" href="../views/logout.php"> <span
                                                         class="material-icons">logout</span> Cerrar sesión </a> </div>
                                         </li>
                                     </ul>
@@ -183,11 +182,6 @@ function obtenerTituloRol($rol_usuario)
                                         </a>
                                     </div>
                                 </div>
-                                <div class="xp-searchbar">
-                                    <input type="search" id="busqueda" class="form-control" placeholder="Buscar...">
-                                </div>
-
-
                             </div>
                             <?php
                             //include_once '../dashboard/admin_usuarios/funciones.php';                         
@@ -500,84 +494,80 @@ function obtenerTituloRol($rol_usuario)
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', (event) => {
-                const editButtons = document.querySelectorAll('.edit');
-                const deleteButtons = document.querySelectorAll('.delete');
-
-                //rellenar el formulario de editar con los datos de la fila
-                editButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        const userId = button.getAttribute('data-id');
-                        const userNombres = button.getAttribute('data-nombres');
-                        const userApellidos = button.getAttribute('data-apellidos');
-                        const userEdad = button.getAttribute('data-edad');
-                        const userTelefono = button.getAttribute('data-telefono');
-                        const userEmail = button.getAttribute('data-email');
-                        const userRol = button.getAttribute('data-rol');
-
-                        console.log(userEmail); // log para verificar xd
-                        console.log(userRol); // log para verificar xd
-
-                        document.getElementById('editNombres').value = userNombres;
-                        document.getElementById('editApellidos').value = userApellidos;
-                        document.getElementById('editEdad').value = userEdad;
-                        document.getElementById('editTelefono').value = userTelefono;
-                        document.getElementById('editEmail').value = userEmail;
-                        document.getElementById('editRol').value = userRol;
-                        document.getElementById('editId').value = userId;
-
-                        let userIdInput = document.getElementById('user_id_input');
-                        if (!userIdInput) {
-                            userIdInput = document.createElement('input');
-                            userIdInput.type = 'hidden';
-                            userIdInput.id = 'user_id_input';
-                            userIdInput.name = 'id_usuario';
-                            document.getElementById('crearUsuarioForm').appendChild(userIdInput);
-                        }
-                        userIdInput.value = userId;
-                    });
-                });
-
-                //rellenar el formulario de editar con los datos de la fila
-                deleteButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        const deleteUserId = button.getAttribute('data-id');
-                        console.log("recibi la informacion para borrar")
-                        console.log(deleteUserId); // log para verificar xd
-
-                        document.getElementById('borrarId').value = deleteUserId;
-                    });
-                });
-            });
-        </script>
-
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script>
             $(document).ready(function () {
+                function attachEvents() {
+                    const editButtons = document.querySelectorAll('.edit');
+                    const deleteButtons = document.querySelectorAll('.delete');
+
+                    editButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const userId = button.getAttribute('data-id');
+                            const userNombres = button.getAttribute('data-nombres');
+                            const userApellidos = button.getAttribute('data-apellidos');
+                            const userEdad = button.getAttribute('data-edad');
+                            const userTelefono = button.getAttribute('data-telefono');
+                            const userEmail = button.getAttribute('data-email');
+                            const userRol = button.getAttribute('data-rol');
+
+                            document.getElementById('editNombres').value = userNombres;
+                            document.getElementById('editApellidos').value = userApellidos;
+                            document.getElementById('editEdad').value = userEdad;
+                            document.getElementById('editTelefono').value = userTelefono;
+                            document.getElementById('editEmail').value = userEmail;
+                            document.getElementById('editRol').value = userRol;
+                            document.getElementById('editId').value = userId;
+
+                            let userIdInput = document.getElementById('user_id_input');
+                            if (!userIdInput) {
+                                userIdInput = document.createElement('input');
+                                userIdInput.type = 'hidden';
+                                userIdInput.id = 'user_id_input';
+                                userIdInput.name = 'id_usuario';
+                                document.getElementById('crearUsuarioForm').appendChild(userIdInput);
+                            }
+                            userIdInput.value = userId;
+                        });
+                    });
+
+                    deleteButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const deleteUserId = button.getAttribute('data-id');
+                            console.log(deleteUserId); // Para depuración
+
+                            document.getElementById('borrarId').value = deleteUserId;
+                        });
+                    });
+                }
+
                 $("#busqueda").on("input", function () {
                     var query = $(this).val();
                     console.log("Consulta: " + query); // Para depuración
-                    if (query.length > 0) {
-                        $.ajax({
-                            url: 'admin_usuarios/buscar_usuario.php',
-                            type: 'POST',
-                            data: { busqueda: query },
-                            success: function (response) {
-                                console.log("Respuesta del servidor: " + response); // Para depuración
-                                $("#employeeTable").html(response);
-                            },
-                            error: function (xhr, status, error) {
-                                console.error("Error: " + error); // Para depuración
-                            }
-                        });
-                    } else {
-                        $("#employeeTable").html('');
-                    }
+                    $.ajax({
+                        url: 'admin_usuarios/buscar_usuario.php',
+                        type: 'POST',
+                        data: { busqueda: query },
+                        success: function (response) {
+                            console.log("Respuesta del servidor: " + response); // Para depuracion de errores
+                            $("#employeeTable").html(response);
+                            attachEvents(); // Re-adjuntar eventos a los nuevos elementos (editar y eliminar)
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error: " + error); // Para depuracion
+                        }
+                    });
                 });
+
+                // Adjuntar eventos inicialmente
+                attachEvents();
             });
         </script>
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 
 
 
