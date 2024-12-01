@@ -13,11 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $registros_por_pagina = 5;
     $offset = ($pagina_actual - 1) * $registros_por_pagina;
 
-    // Construir consulta SQL con búsqueda, paginación y filtro por rol de usuario (id_rol 1 y 3)
+    // Construir consulta SQL con búsqueda, paginación y filtro por rol de profesor
     if (empty($busqueda)) {
-        $query = "SELECT * FROM usuarios WHERE id_rol IN (1, 3) LIMIT :offset, :registros_por_pagina";
+        $query = "SELECT * FROM usuarios WHERE id_rol = 2 LIMIT :offset, :registros_por_pagina";
     } else {
-        $query = "SELECT * FROM usuarios WHERE id_rol IN (1, 3) AND (nombre LIKE :busqueda OR apellido LIKE :busqueda OR email LIKE :busqueda) LIMIT :offset, :registros_por_pagina";
+        $query = "SELECT * FROM usuarios WHERE id_rol = 2 AND (nombre LIKE :busqueda OR apellido LIKE :busqueda OR email LIKE :busqueda) LIMIT :offset, :registros_por_pagina";
     }
 
     $stmt = $conn->prepare($query);
@@ -43,20 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $output .= '<td>' . htmlspecialchars($fila['celular']) . '</td>';
 
         // Convertir ID de rol a nombre de rol
-        switch ($fila['id_rol']) {
-            case 1:
-                $roleName = 'Usuario';
-                break;
-            case 2:
-                $roleName = 'Profesor';
-                break;
-            case 3:
-                $roleName = 'Administrador';
-                break;
-            default:
-                $roleName = 'Desconocido';
-                break;
-        }
+        $roleName = 'Profesor';
         $output .= '<td>' . htmlspecialchars($roleName) . '</td>';
         $output .= '<td align="center">';
         if ($_SESSION['rol'] == 3 && $fila['id_rol'] != 3) {
@@ -82,9 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Calcular el total de registros encontrados
     if (empty($busqueda)) {
-        $query_total = "SELECT COUNT(*) as total FROM usuarios WHERE id_rol IN (1, 3)";
+        $query_total = "SELECT COUNT(*) as total FROM usuarios WHERE id_rol = 2";
     } else {
-        $query_total = "SELECT COUNT(*) as total FROM usuarios WHERE id_rol IN (1, 3) AND (nombre LIKE :busqueda OR apellido LIKE :busqueda OR email LIKE :busqueda)";
+        $query_total = "SELECT COUNT(*) as total FROM usuarios WHERE id_rol = 2 AND (nombre LIKE :busqueda OR apellido LIKE :busqueda OR email LIKE :busqueda)";
     }
 
     $stmt_total = $conn->prepare($query_total);
@@ -98,12 +85,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $total_paginas = ceil($total_registros / $registros_por_pagina);
 
     // Generar HTML para la paginación
-    // Generar HTML para la paginación
     
     $output .= '</ul></nav></td></tr>';
 
     echo $output;
-    
 }
 ?>
 
@@ -158,11 +143,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
     });
 
-    function buscarUsuarios(pagina) {
+    function buscarProfesor(pagina) {
         var query = $("#busqueda").val();
         console.log("Consulta: " + query); // Para depuración
         $.ajax({
-            url: 'admin_usuarios/buscar_usuario.php',
+            url: 'admin_usuarios/buscar_profesor.php',
             type: 'POST',
             data: { busqueda: query, pagina: pagina },
             success: function (response) {

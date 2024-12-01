@@ -1,20 +1,20 @@
 <!doctype html>
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/Brainbook/config/Database.php';
-session_start(); // Crear instancia de la clase Database y obtener la conexión
+session_start();
 $database = new Database();
-$conn = $database->getConnection(); // Verifica si el usuario ha iniciado sesión 
+$conn = $database->getConnection();
 if (isset($_SESSION['usuario'])) {
     $nombre_usuario = $_SESSION['usuario'];
-    $rol_usuario = $_SESSION['rol']; // Asumiendo que el rol del usuario también se almacena en la sesión // Verifica si el usuario tiene el rol adecuado (rol 3 en este caso)
-    if ($rol_usuario != 3) { // Si el usuario no tiene rol 3, redirige a una página de acceso denegado 
+    $rol_usuario = $_SESSION['rol'];
+    if ($rol_usuario != 3) {
         header("Location: ../views/index.php");
         exit();
     }
-} else { // Si el usuario no ha iniciado sesión, redirige a la página de login 
+} else {
     header("Location: ../views/index.php");
     exit();
-} // Aquí puedes colocar el contenido del dashboard echo "<h1>Bienvenido al Admin Dashboard, $nombre_usuario</h1>";el contenido del dashboard echo "echo "<h1>Bienvenido al Admin Dashboard, .$nombre_usuario .</h1>";"; 
+}
 
 
 function obtenerTituloRol($rol_usuario)
@@ -112,10 +112,8 @@ function obtenerTituloRol($rol_usuario)
                 </li>
             </ul>
         </div>
-        <!-------sidebar--design- close----------->
         <!-------page-content start----------->
         <div id="content">
-            <!------top-navbar-start----------->
             <!------top-navbar-start----------->
             <div class="top-navbar">
                 <div class="xd-topbar">
@@ -157,11 +155,12 @@ function obtenerTituloRol($rol_usuario)
                     </div>
                     <div class="xp-breadcrumbbar text-center">
                         <h4 class="page-title">Dashboard</h4>
-                        <?php //obtiene el titulo y el rol del usuario activo
+                        <?php
                         if (isset($_SESSION['usuario']) && isset($_SESSION['rol'])) {
                             $titulo_rol = obtenerTituloRol($_SESSION['rol']);
                             echo '<ol class="breadcrumb"> <li class="breadcrumb-item active">Bienvenido</li> <li class="breadcrumb-item active" aria-current="page">' . $titulo_rol . ' ' . htmlspecialchars($nombre_usuario) . '</li> </ol>';
-                        } ?>
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -177,12 +176,12 @@ function obtenerTituloRol($rol_usuario)
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-                                        <h2 class="ml-lg-2">Administrar usuarios</h2>
+                                        <h2 class="ml-lg-2">Administrar Usuarios</h2>
                                     </div>
                                     <div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
                                         <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
                                             <i class="material-icons">person_add</i>
-                                            <span>Agregar nuevo usuario</span>
+                                            <span>Agregar nuevo Usuario</span>
                                         </a>
                                     </div>
                                 </div>
@@ -191,7 +190,7 @@ function obtenerTituloRol($rol_usuario)
                             //include_once '../dashboard/admin_usuarios/funciones.php';                         
                             
                             // Configuración de pagina
-                            $registros_por_pagina = 6;
+                            $registros_por_pagina = 5;
 
                             if (isset($_GET['pagina'])) {
                                 $pagina_actual = $_GET['pagina'];
@@ -207,8 +206,9 @@ function obtenerTituloRol($rol_usuario)
                             $database = new Database();
                             $conn = $database->getConnection();
 
-                            // Consulta SQL con límite y offset para la paginacion
-                            $consulta = "SELECT usuarios.id_usuario, usuarios.nombre, usuarios.apellido, usuarios.email, usuarios.celular, usuarios.edad, usuarios.id_rol, roles.nombre_rol FROM usuarios LEFT JOIN roles ON usuarios.id_rol = roles.id_rol LIMIT :offset, :registros_por_pagina";
+                            // Consulta SQL con límite y offset para la paginación, filtrando solo usuarios con id_rol 1 y 3
+                            $consulta = "SELECT usuarios.id_usuario, usuarios.nombre, usuarios.apellido, usuarios.email, usuarios.celular, usuarios.edad, usuarios.id_rol, roles.nombre_rol FROM usuarios LEFT JOIN roles ON usuarios.id_rol = roles.id_rol WHERE usuarios.id_rol IN (1, 3) LIMIT :offset, :registros_por_pagina";
+
 
                             $stmt = $conn->prepare($consulta);
                             $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
@@ -218,9 +218,7 @@ function obtenerTituloRol($rol_usuario)
                             $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                             // se obtiene el numero total de registros
-                            $resultado_total = $conn->query("SELECT COUNT(*) AS total FROM usuarios");
-                            $row_total = $resultado_total->fetch(PDO::FETCH_ASSOC);
-                            $total_registros = $row_total['total'];
+                            $resultado_total = $conn->query("SELECT COUNT(*) AS total FROM usuarios WHERE id_rol IN (1, 3)"); $row_total = $resultado_total->fetch(PDO::FETCH_ASSOC); $total_registros = $row_total['total'];
 
                             // Calcula el número total de páginas
                             $total_paginas = ceil($total_registros / $registros_por_pagina);
@@ -552,18 +550,21 @@ function obtenerTituloRol($rol_usuario)
                 // Función para realizar la búsqueda de usuarios con paginación
                 function buscarUsuarios(pagina) {
                     var query = $("#busqueda").val();
-                    console.log("Consulta: " + query); // Para depuración
+                    // Para depuración
+                    //console.log("Consulta: " + query); 
                     $.ajax({
                         url: 'admin_usuarios/buscar_usuario.php',
                         type: 'POST',
                         data: { busqueda: query, pagina: pagina },
                         success: function (response) {
-                            console.log("Respuesta del servidor: " + response); // Para depuración de errores
+                            // Para depuración de errores
+                            //console.log("Respuesta del servidor: " + response); 
                             $("#employeeTable").html(response); // Asegúrate de usar el ID correcto de la tabla
                             attachEvents(); // Re-adjuntar eventos a los nuevos elementos (editar y eliminar)
                         },
                         error: function (xhr, status, error) {
-                            console.error("Error: " + error); // Para depuración
+                            // Para depuración
+                            console.error("Error: " + error);
                         }
                     });
                 }
