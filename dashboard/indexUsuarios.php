@@ -41,8 +41,7 @@ function obtenerTituloRol($rol_usuario)
     <title>Administración</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../dashboard/sources/css/bootstrap.min.css">
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!----css3---->
     <link rel="stylesheet" href="../dashboard/sources/css/custom.css">
     <!--google fonts -->
@@ -117,6 +116,7 @@ function obtenerTituloRol($rol_usuario)
         <!-------page-content start----------->
         <div id="content">
             <!------top-navbar-start----------->
+            <!------top-navbar-start----------->
             <div class="top-navbar">
                 <div class="xd-topbar">
                     <div class="row">
@@ -131,7 +131,6 @@ function obtenerTituloRol($rol_usuario)
                                     <div class="input-group-append"> <button class="btn" type="submit"
                                             id="button-addon2">🔎</button> </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
@@ -148,7 +147,8 @@ function obtenerTituloRol($rol_usuario)
                                                     href="perfil.php"> <span
                                                         class="material-icons">person_outline</span> Perfil </a> <a
                                                     class="dropdown-item" href="../views/logout.php"> <span
-                                                        class="material-icons">logout</span> Cerrar sesión </a> </div>
+                                                        class="material-icons">logout</span> Cerrar sesión </a>
+                                            </div>
                                         </li>
                                     </ul>
                                 </nav>
@@ -164,7 +164,11 @@ function obtenerTituloRol($rol_usuario)
                         } ?>
                     </div>
                 </div>
-            </div> <!------top-navbar-end----------->
+            </div>
+
+            <!------top-navbar-end----------->
+
+
             <!------main-content-start----------->
             <div class="main-content">
                 <div class="row">
@@ -486,17 +490,21 @@ function obtenerTituloRol($rol_usuario)
                 window.location.href = "../../dashboard/indexUsuarios.php";
             }
         </script>-->
-        <script src="sources/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="sources/js/jquery-3.3.1.min.js"></script>
         <script src="sources/js/popper.min.js"></script>
         <script src="sources/js/bootstrap.min.js"></script>
-        <script src="sources/js/jquery-3.3.1.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script>
             $(document).ready(function () {
+                $(".xp-menubar").on('click', function () {
+                    $("#sidebar").toggleClass('active');
+                    $("#content").toggleClass('active');
+                });
+
+                $('.xp-menubar, .body-overlay').on('click', function () {
+                    $("#sidebar, .body-overlay").toggleClass('show-nav');
+                });
+
+                // Función para adjuntar eventos a los botones de editar y eliminar
                 function attachEvents() {
                     const editButtons = document.querySelectorAll('.edit');
                     const deleteButtons = document.querySelectorAll('.delete');
@@ -541,28 +549,35 @@ function obtenerTituloRol($rol_usuario)
                     });
                 }
 
-                $("#busqueda").on("input", function () {
-                    var query = $(this).val();
+                // Función para realizar la búsqueda de usuarios con paginación
+                function buscarUsuarios(pagina) {
+                    var query = $("#busqueda").val();
                     console.log("Consulta: " + query); // Para depuración
                     $.ajax({
                         url: 'admin_usuarios/buscar_usuario.php',
                         type: 'POST',
-                        data: { busqueda: query },
+                        data: { busqueda: query, pagina: pagina },
                         success: function (response) {
-                            console.log("Respuesta del servidor: " + response); // Para depuracion de errores
-                            $("#employeeTable").html(response);
+                            console.log("Respuesta del servidor: " + response); // Para depuración de errores
+                            $("#employeeTable").html(response); // Asegúrate de usar el ID correcto de la tabla
                             attachEvents(); // Re-adjuntar eventos a los nuevos elementos (editar y eliminar)
                         },
                         error: function (xhr, status, error) {
-                            console.error("Error: " + error); // Para depuracion
+                            console.error("Error: " + error); // Para depuración
                         }
                     });
+                }
+
+                // Realizar la búsqueda de usuarios al escribir en el campo de búsqueda
+                $("#busqueda").on("input", function () {
+                    buscarUsuarios(1); // Buscar en la primera página
                 });
 
                 // Adjuntar eventos inicialmente
                 attachEvents();
             });
         </script>
+
 
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

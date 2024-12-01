@@ -9,19 +9,24 @@ $conn = $database->getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $busqueda = htmlspecialchars($_POST['busqueda']);
+    $pagina_actual = isset($_POST['pagina']) ? (int)$_POST['pagina'] : 1;
+    $registros_por_pagina = 5;
+    $offset = ($pagina_actual - 1) * $registros_por_pagina;
 
-    // Si no hay término de búsqueda, selecciona todos los usuarios
+    // Construir consulta SQL con búsqueda y paginación
     if (empty($busqueda)) {
-        $query = "SELECT * FROM usuarios";
+        $query = "SELECT * FROM usuarios LIMIT :offset, :registros_por_pagina";
     } else {
-        $query = "SELECT * FROM usuarios WHERE nombre LIKE :busqueda OR apellido LIKE :busqueda OR email LIKE :busqueda";
+        $query = "SELECT * FROM usuarios WHERE nombre LIKE :busqueda OR apellido LIKE :busqueda OR email LIKE :busqueda LIMIT :offset, :registros_por_pagina";
     }
 
     $stmt = $conn->prepare($query);
 
     if (!empty($busqueda)) {
-        $stmt->bindValue(':busqueda', '%' . $busqueda . '%');
+        $stmt->bindValue(':busqueda', '%' . $busqueda . '%', PDO::PARAM_STR);
     }
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+    $stmt->bindParam(':registros_por_pagina', $registros_por_pagina, PDO::PARAM_INT);
 
     $stmt->execute();
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -37,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $output .= '<td>' . htmlspecialchars($fila['edad']) . '</td>';
         $output .= '<td>' . htmlspecialchars($fila['celular']) . '</td>';
 
-        // Convertir ID de rol a nombre de rol $roleName = ''; 
+        // Convertir ID de rol a nombre de rol
         switch ($fila['id_rol']) {
             case 1:
                 $roleName = 'Usuario';
@@ -75,6 +80,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $output .= '</tr>';
     }
 
+    // Calcular el total de registros encontrados
+    if (empty($busqueda)) {
+        $query_total = "SELECT COUNT(*) as total FROM usuarios";
+    } else {
+        $query_total = "SELECT COUNT(*) as total FROM usuarios WHERE nombre LIKE :busqueda OR apellido LIKE :busqueda OR email LIKE :busqueda";
+    }
+
+    $stmt_total = $conn->prepare($query_total);
+
+    if (!empty($busqueda)) {
+        $stmt_total->bindValue(':busqueda', '%' . $busqueda . '%', PDO::PARAM_STR);
+    }
+    
+    $stmt_total->execute();
+    $total_registros = $stmt_total->fetch(PDO::FETCH_ASSOC)['total'];
+    $total_paginas = ceil($total_registros / $registros_por_pagina);
+
+    // Generar HTML para la paginación
+    
+    $output .= '</ul></nav></td></tr>';
+
     echo $output;
 }
 ?>
@@ -84,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const editButtons = document.querySelectorAll('.edit');
         const deleteButtons = document.querySelectorAll('.delete');
 
-        //rellenar el formulario de editar con los datos de la fila
+        // Rellenar el formulario de editar con los datos de la fila
         editButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const userId = button.getAttribute('data-id');
@@ -118,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             });
         });
 
-        //rellenar el formulario de editar con los datos de la fila
+        // Rellenar el formulario de eliminar con los datos de la fila
         deleteButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const deleteUserId = button.getAttribute('data-id');
@@ -129,4 +155,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             });
         });
     });
+
+    function buscarUsuarios(pagina) {
+        var query = $("#busqueda").val();
+        console.log("Consulta: " + query); // Para depuración
+        $.ajax({
+            url: 'admin_usuarios/buscar_usuario.php',
+            type: 'POST',
+            data: { busqueda: query, pagina: pagina },
+            success: function (response) {
+                console.log("Respuesta del servidor: " + response); // Para depuración de errores
+                $("#userTable").html(response); // Asegúrate de usar el ID correcto de la tabla
+                attachEvents(); // Re-adjuntar eventos a los nuevos elementos (editar y eliminar)
+            },
+            error: function (xhr, status, error) {
+                console.error("Error: " + error); // Para depuración
+            }
+        });
+    }
 </script>
