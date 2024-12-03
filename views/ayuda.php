@@ -18,7 +18,6 @@
 		<title>Brainbook</title>
 
 	</head>
-
 	<body>
 
 		<!-- Inicio de navegación -->
@@ -39,15 +38,13 @@
 						<li><a class="nav-link" href="cursos.php">Cursos</a></li>
 						<li><a class="nav-link" href="foro.php">Foro</a></li>
 						<li><a class="nav-link" href="ayuda.php">Ayuda</a></li>
-						
-				
 					</ul>
-
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-						
-						<li><a class="nav-link" herf="#"><image src="../public/images/campana.png" width="18" height="20"></a> </li>
-						<li><a class="nav-link" href="login.php"><img src="../public/images/user.svg"></a></li>	
-											
+						<li>
+							<a class="nav-link" herf="#"><image src="../public/images/campana.png" width="18" height="20"></a> 
+						</li>
+						<li>
+							<a class="nav-link" href="login.php"><img src="../public/images/user.svg"></a></li>						
 					</ul>
 				</div>
 			</div>

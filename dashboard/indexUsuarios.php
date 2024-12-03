@@ -1,20 +1,20 @@
 <!doctype html>
 <?php
-require_once __DIR__ . '/../config/Database.php';
-session_start(); // Crear instancia de la clase Database y obtener la conexión
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Brainbook/config/Database.php';
+session_start();
 $database = new Database();
-$conn = $database->getConnection(); // Verifica si el usuario ha iniciado sesión 
+$conn = $database->getConnection();
 if (isset($_SESSION['usuario'])) {
     $nombre_usuario = $_SESSION['usuario'];
-    $rol_usuario = $_SESSION['rol']; // Asumiendo que el rol del usuario también se almacena en la sesión // Verifica si el usuario tiene el rol adecuado (rol 3 en este caso)
-    if ($rol_usuario != 3) { // Si el usuario no tiene rol 3, redirige a una página de acceso denegado 
+    $rol_usuario = $_SESSION['rol'];
+    if ($rol_usuario != 3) {
         header("Location: ../views/index.php");
         exit();
     }
-} else { // Si el usuario no ha iniciado sesión, redirige a la página de login 
+} else {
     header("Location: ../views/index.php");
     exit();
-} // Aquí puedes colocar el contenido del dashboard echo "<h1>Bienvenido al Admin Dashboard, $nombre_usuario</h1>";el contenido del dashboard echo "echo "<h1>Bienvenido al Admin Dashboard, .$nombre_usuario .</h1>";"; 
+}
 
 
 function obtenerTituloRol($rol_usuario)
@@ -41,8 +41,7 @@ function obtenerTituloRol($rol_usuario)
     <title>Administración</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../dashboard/sources/css/bootstrap.min.css">
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!----css3---->
     <link rel="stylesheet" href="../dashboard/sources/css/custom.css">
     <!--google fonts -->
@@ -113,7 +112,6 @@ function obtenerTituloRol($rol_usuario)
                 </li>
             </ul>
         </div>
-        <!-------sidebar--design- close----------->
         <!-------page-content start----------->
         <div id="content">
             <!------top-navbar-start----------->
@@ -131,7 +129,6 @@ function obtenerTituloRol($rol_usuario)
                                     <div class="input-group-append"> <button class="btn" type="submit"
                                             id="button-addon2">🔎</button> </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
@@ -148,7 +145,8 @@ function obtenerTituloRol($rol_usuario)
                                                     href="perfil.php"> <span
                                                         class="material-icons">person_outline</span> Perfil </a> <a
                                                     class="dropdown-item" href="../views/logout.php"> <span
-                                                        class="material-icons">logout</span> Cerrar sesión </a> </div>
+                                                        class="material-icons">logout</span> Cerrar sesión </a>
+                                            </div>
                                         </li>
                                     </ul>
                                 </nav>
@@ -157,14 +155,19 @@ function obtenerTituloRol($rol_usuario)
                     </div>
                     <div class="xp-breadcrumbbar text-center">
                         <h4 class="page-title">Dashboard</h4>
-                        <?php //obtiene el titulo y el rol del usuario activo
+                        <?php
                         if (isset($_SESSION['usuario']) && isset($_SESSION['rol'])) {
                             $titulo_rol = obtenerTituloRol($_SESSION['rol']);
                             echo '<ol class="breadcrumb"> <li class="breadcrumb-item active">Bienvenido</li> <li class="breadcrumb-item active" aria-current="page">' . $titulo_rol . ' ' . htmlspecialchars($nombre_usuario) . '</li> </ol>';
-                        } ?>
+                        }
+                        ?>
                     </div>
                 </div>
-            </div> <!------top-navbar-end----------->
+            </div>
+
+            <!------top-navbar-end----------->
+
+
             <!------main-content-start----------->
             <div class="main-content">
                 <div class="row">
@@ -173,12 +176,12 @@ function obtenerTituloRol($rol_usuario)
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-                                        <h2 class="ml-lg-2">Administrar usuarios</h2>
+                                        <h2 class="ml-lg-2">Administrar Usuarios</h2>
                                     </div>
                                     <div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
                                         <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal">
                                             <i class="material-icons">person_add</i>
-                                            <span>Agregar nuevo usuario</span>
+                                            <span>Agregar nuevo Usuario</span>
                                         </a>
                                     </div>
                                 </div>
@@ -187,7 +190,7 @@ function obtenerTituloRol($rol_usuario)
                             //include_once '../dashboard/admin_usuarios/funciones.php';                         
                             
                             // Configuración de pagina
-                            $registros_por_pagina = 6;
+                            $registros_por_pagina = 5;
 
                             if (isset($_GET['pagina'])) {
                                 $pagina_actual = $_GET['pagina'];
@@ -203,8 +206,9 @@ function obtenerTituloRol($rol_usuario)
                             $database = new Database();
                             $conn = $database->getConnection();
 
-                            // Consulta SQL con límite y offset para la paginacion
-                            $consulta = "SELECT usuarios.id_usuario, usuarios.nombre, usuarios.apellido, usuarios.email, usuarios.celular, usuarios.edad, usuarios.id_rol, roles.nombre_rol FROM usuarios LEFT JOIN roles ON usuarios.id_rol = roles.id_rol LIMIT :offset, :registros_por_pagina";
+                            // Consulta SQL con límite y offset para la paginación, filtrando solo usuarios con id_rol 1 y 3
+                            $consulta = "SELECT usuarios.id_usuario, usuarios.nombre, usuarios.apellido, usuarios.email, usuarios.celular, usuarios.edad, usuarios.id_rol, roles.nombre_rol FROM usuarios LEFT JOIN roles ON usuarios.id_rol = roles.id_rol WHERE usuarios.id_rol IN (1, 3) LIMIT :offset, :registros_por_pagina";
+
 
                             $stmt = $conn->prepare($consulta);
                             $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
@@ -214,9 +218,7 @@ function obtenerTituloRol($rol_usuario)
                             $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                             // se obtiene el numero total de registros
-                            $resultado_total = $conn->query("SELECT COUNT(*) AS total FROM usuarios");
-                            $row_total = $resultado_total->fetch(PDO::FETCH_ASSOC);
-                            $total_registros = $row_total['total'];
+                            $resultado_total = $conn->query("SELECT COUNT(*) AS total FROM usuarios WHERE id_rol IN (1, 3)"); $row_total = $resultado_total->fetch(PDO::FETCH_ASSOC); $total_registros = $row_total['total'];
 
                             // Calcula el número total de páginas
                             $total_paginas = ceil($total_registros / $registros_por_pagina);
@@ -486,17 +488,21 @@ function obtenerTituloRol($rol_usuario)
                 window.location.href = "../../dashboard/indexUsuarios.php";
             }
         </script>-->
-        <script src="sources/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="sources/js/jquery-3.3.1.min.js"></script>
         <script src="sources/js/popper.min.js"></script>
         <script src="sources/js/bootstrap.min.js"></script>
-        <script src="sources/js/jquery-3.3.1.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script>
             $(document).ready(function () {
+                $(".xp-menubar").on('click', function () {
+                    $("#sidebar").toggleClass('active');
+                    $("#content").toggleClass('active');
+                });
+
+                $('.xp-menubar, .body-overlay').on('click', function () {
+                    $("#sidebar, .body-overlay").toggleClass('show-nav');
+                });
+
+                // Función para adjuntar eventos a los botones de editar y eliminar
                 function attachEvents() {
                     const editButtons = document.querySelectorAll('.edit');
                     const deleteButtons = document.querySelectorAll('.delete');
@@ -541,28 +547,38 @@ function obtenerTituloRol($rol_usuario)
                     });
                 }
 
-                $("#busqueda").on("input", function () {
-                    var query = $(this).val();
-                    console.log("Consulta: " + query); // Para depuración
+                // Función para realizar la búsqueda de usuarios con paginación
+                function buscarUsuarios(pagina) {
+                    var query = $("#busqueda").val();
+                    // Para depuración
+                    //console.log("Consulta: " + query); 
                     $.ajax({
                         url: 'admin_usuarios/buscar_usuario.php',
                         type: 'POST',
-                        data: { busqueda: query },
+                        data: { busqueda: query, pagina: pagina },
                         success: function (response) {
-                            console.log("Respuesta del servidor: " + response); // Para depuracion de errores
-                            $("#employeeTable").html(response);
+                            // Para depuración de errores
+                            //console.log("Respuesta del servidor: " + response); 
+                            $("#employeeTable").html(response); // Asegúrate de usar el ID correcto de la tabla
                             attachEvents(); // Re-adjuntar eventos a los nuevos elementos (editar y eliminar)
                         },
                         error: function (xhr, status, error) {
-                            console.error("Error: " + error); // Para depuracion
+                            // Para depuración
+                            console.error("Error: " + error);
                         }
                     });
+                }
+
+                // Realizar la búsqueda de usuarios al escribir en el campo de búsqueda
+                $("#busqueda").on("input", function () {
+                    buscarUsuarios(1); // Buscar en la primera página
                 });
 
                 // Adjuntar eventos inicialmente
                 attachEvents();
             });
         </script>
+
 
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
