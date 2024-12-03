@@ -97,11 +97,11 @@ if (isset($_SESSION['usuario'])) {
 	<!-- Primera sección -->
 	<div class="hero">
 		<div class="container">
-			<div class="row justify-content-between">
-				<!-- <div class="col-lg-3"> -->
+			<div class="row">
+				<div class="col">
 				<div class="intro-excerpt">
-					<h1 id="greeting"><span clsas="d-block"></span></h1>
-					<h1>Bienvenido, <?php echo htmlspecialchars($nombre_usuario); ?>!</h1>
+					<h1 id="greeting"><span class="d-block"></span></h1>
+					<h1>¡Bienvenido, <?php echo htmlspecialchars($nombre_usuario); ?>!</h1>
 					<p class="mb-4">Es tiempo de adquirir más conocimientos </p>
 					<p><a href="https://tubiblioteca.utp.edu.pe/" class="btn btn-secondary me-2"
 							target="_blank">Biblioteca</a>
@@ -111,7 +111,19 @@ if (isset($_SESSION['usuario'])) {
 					</p>
 					<a href="logout.php" class="btn btn-danger">Cerrar sesión</a>
 				</div>
-				<!-- </div> -->
+				</div>
+
+				<div class="col">
+				<div class="container">
+					<h1 id="message">¡Comienza con el pie derecho!</h1>
+					<div class="progress-bar-container">
+						<div class="progress-bar" id="progress-bar"></div>
+					</div>
+					<button id="click-btn">Haz clic aquí</button>
+					<p id="click-count">Clics: 0</p>
+				</div>
+				<script src="../public/js/progressbar.js"></script>
+				</div>
 
 			</div>
 		</div>
@@ -124,20 +136,13 @@ if (isset($_SESSION['usuario'])) {
 		<div class="container">
 			<p class="h2-title"> Continuar viendo contenido </p>
 			<div class="row">
-
-				<!-- Primera columna -->
-				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-
-				</div>
-				<!-- Fin de la columna 1 -->
-
-				<!-- columna 2 -->
+				<!-- Curso reciente -->
 				<div class="col-6 col-md-2 col-lg-2 mb-3">
-					<a class="product-item" href="#">
+					<a class="product-item" href="frontedcurse.php">
 						<img src="../public/images/analisis.png" class="img-fluid product-thumbnail">
-						<p class="title-curse">Analisis y Diseño</p>
+						<p class="title-curse">Redes y Comunicaciones </p>
 
-						<strong class="product-price">Semana 7</strong>
+						<strong class="product-price">Semana 4</strong>
 
 						<span class="icon-cross">
 							<img src="../public/images/cross.svg" class="img-fluid">
@@ -146,35 +151,6 @@ if (isset($_SESSION['usuario'])) {
 				</div>
 				<!-- fin columna 2 -->
 
-				<!--columna 3 -->
-				<div class="col-6 col-md-2 col-lg-2 mb-3">
-					<a class="product-item" href="#">
-						<img src="../public/images/ingles.png" class="img-fluid product-thumbnail">
-						<p class="title-curse">Inglés IV</p>
-
-						<strong class="product-price">Semana 7</strong>
-
-						<span class="icon-cross">
-							<img src="../public/images/cross.svg" class="img-fluid">
-						</span>
-					</a>
-				</div>
-				<!-- fin columna 3 -->
-
-				<!-- columna 4 -->
-				<div class="col-6 col-md-2 col-lg-2 mb-3">
-					<a class="product-item" href="#">
-						<img src="../public/images/analisis.png" class="img-fluid product-thumbnail">
-						<p class="title-curse">Analisis y Diseño</p>
-
-						<strong class="product-price">Semana 7</strong>
-
-						<span class="icon-cross">
-							<img src="../public/images/cross.svg" class="img-fluid">
-						</span>
-					</a>
-				</div>
-				<!-- fin columna 4 -->
 
 			</div>
 		</div>

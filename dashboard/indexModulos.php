@@ -76,7 +76,7 @@ function obtenerTituloRol($id_rol) {
                         <a href="indexCursos.php" class=""><i class="material-icons">collections_bookmark</i>Cursos</a>
                     </li>
                     <li class="active">
-                        <a href="indexSolicitudes.php" class="active"><i class="material-icons">chrome_reader_mode</i>Rubricas</a>
+                        <a href="indexModulos.php" class="active"><i class="material-icons">chrome_reader_mode</i>Modulos</a>
                     </li>
                 </ul>
             </div>
@@ -156,7 +156,7 @@ function obtenerTituloRol($id_rol) {
                                 <div class="table-title">
                                     <div class="row">
                                         <div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
-                                            <h2 class="ml-lg-2">Administrar Rubricas</h2>
+                                            <h2 class="ml-lg-2">Administrar Modulos</h2>
                                         </div>
                                         <div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
                                         </div>

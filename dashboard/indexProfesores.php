@@ -73,7 +73,7 @@ function obtenerTituloRol($id_rol) {
                         <a href="indexCursos.php" class=""><i class="material-icons">collections_bookmark</i>Cursos</a>
                     </li>
                     <li class="">
-                        <a href="indexSolicitudes.php" class=""><i class="material-icons">chrome_reader_mode</i>Rubricas</a>
+                        <a href="indexModulos.php" class=""><i class="material-icons">chrome_reader_mode</i>Modulos</a>
                     </li>
                 </ul>
             </div>

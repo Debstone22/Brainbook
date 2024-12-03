@@ -56,141 +56,171 @@
 				
 		</nav>
 		<!-- Fin de navegación -->
+		 
+        <!-- Semanas -->
+		<div class="container-fluid bg-white">
+			
+				<ul class="nav justify-content-center">
+					<li class="nav-item">
+						<a class="nav-link" href="#">Silabo</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 1</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 2</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 3</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 4</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 5</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 6</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 7</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 8</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 9</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 10</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 11</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 12</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 13</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 14</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 15</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 16</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 17</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Semana 18</a>
+					</li>
+					
+				</ul>
+			
+		</div>
+<!-- Fin de Semanas -->
+		<h2>¡S4- EtherChannel!</h2>
+		
+        <!-- Boton de Check -->
+		
+		<!-- Fin de Boton-->
 
-		<!-- Start Hero Section -->
-			<div class="hero">
-				<div class="container">
-					<div class="row justify-content-between">
-						<div class="col-lg-5">
-							<div class="intro-excerpt">
-								<h1></h1>
-								<h1>Cursos pendientes</h1>
-							</div>
-						</div>
-						<div class="col-lg-7">
-							
-						</div>
-					</div>
+		<div class="container">
+		<div class="row">
+		<div class="wrapper col-7">
+		
+		
+		<button>
+			<span class="span-mother">
+				<span>A</span>
+				<span>n</span>
+				<span>t</span>
+				<span>e</span>
+				<span>r</span>
+				<span>i</span>
+				<span>o</span>
+				<span>r</span>
+			</span>
+			<span class="span-mother2">
+				<span>A</span>
+				<span>n</span>
+				<span>t</span>
+				<span>e</span>
+				<span>r</span>
+				<span>i</span>
+				<span>o</span>
+				<span>r</span>
+			</span>
+		</button>
+		<button>
+			<span class="span-mother">
+				<span>S</span>
+				<span>i</span>
+				<span>g</span>
+				<span>u</span>
+				<span>i</span>
+				<span>e</span>
+				<span>n</span>
+				<span>t</span>
+				<span>e</span>
+			</span>
+			<span class="span-mother2">
+				<span>S</span>
+				<span>i</span>
+				<span>g</span>
+				<span>u</span>
+				<span>i</span>
+				<span>e</span>
+				<span>n</span>
+				<span>t</span>
+				<span>e</span>
+			</span>
+		</button>
+	</div>
+			<div class="col">
+				<label class="switch">
+				<input type="checkbox">
+				<span class="slider"></span>
+				</label>
+				<span class="switch-title">¿Lo completaste? Marca la casilla</span>
+				
+			</div>			
+	</div>
+	</div>
+		
+		<div class="container">
+			<div class="row">
+				<div class="wrapper col-7">
+				<embed src="docs/S04_S1.pdf" type="application/pdf" width="720px" height="720px"/>
 				</div>
-			</div>
-		<!-- End Hero Section -->
-
-		<div class="menu">
-
-		<!-- Combo Box para filtrar preguntas -->
-		<label for="filter">Filtrar por categoría:</label>			
-			<select id="filter" onchange="filterQuestions()">		
-							
-				<option value="Mas recientes">Mas recientes</option>		
-				<option value="Menos vistos">Menos vistos</option>
-				<option value="Trabajos pendientes">Trabajos pendientes</option>
-				<option value="Todo">Todo</option>
-				</select>
-		</div>
-			<script src="../public/js/menu.js"></script>				
-
-		<div class="untree_co-section product-section before-footer-section">
-					
-		    <div class="container">
-		      	<div class="row">
-
-		      		<!-- Start Column 1 -->
-					<div class="col-6 col-md-2 col-lg-2 mb-3">
-						<a class="product-item" href="#">
-							<img src="../public/images/integracion.png" class="img-fluid product-thumbnail">
-							<p class="title-curse">Curso Integrador I</p>
-							<h6>Francisco Donayre</h6>
-							<strong class="product-price">Semana 7</strong>
-							
-
-
-							<span class="icon-cross">
-								<img src="../public/images/cross.svg" class="img-fluid">
-
-							</span>
-						</a>
-					</div> 
-					<!-- End Column 1 -->
-						
-					<!-- Start Column 2 -->
-					<div class="col-6 col-md-2 col-lg-2 mb-3">
-						<a class="product-item" href="#">
-							<img src="../public/images/la-red.png" class="img-fluid product-thumbnail">
-							<p class="title-curse">Redes y Comunicaciones II</p>
-							<h6>Francisco Donayre</h6>
-							<strong class="product-price">Semana 6</strong>
-
-							<span class="icon-cross">
-								<img src="../public/images/cross.svg" class="img-fluid">
-							</span>
-						</a>
-					</div> 
-					<!-- End Column 2 -->
-
-					<!-- Start Column 3 -->
-					<div class="col-6 col-md-2 col-lg-2 mb-3">
-						<a class="product-item" href="#">
-							<img src="../public/images/ingles.png" class="img-fluid product-thumbnail">
-							<p class="title-curse">Inglés IV</p>
-							<h6>Francisco Donayre</h6>
-							<strong class="product-price">Semana 7</strong>
-
-							<span class="icon-cross">
-								<img src="../public/images/cross.svg" class="img-fluid">
-							</span>
-						</a>
+		
+	
+			
+				<div class="col">
+				
+				
+				</label>
+					<h2>¡Escribe aquí tu resumen!</h2>
+					<div class="container3">
+						<div class="typewriter" >
+						<div class="slide"><i></i></div>
+						<div class="paper"></div>
+						<div class="keyboard"></div>
+						</div>
 					</div>
-					<!-- End Column 3 -->
-
-					<!-- Start Column 4 -->
-					<div class="col-6 col-md-2 col-lg-2 mb-3">
-						<a class="product-item" href="#">
-							<img src="../public/images/analisis.png" class="img-fluid product-thumbnail">
-							<p class="title-curse">Analisis y Diseño</p>
-							<h6>Francisco Donayre</h6>
-							<strong class="product-price">Semana 7</strong>
-
-							<span class="icon-cross">
-								<img src="../public/images/cross.svg" class="img-fluid">
-							</span>
-						</a>
-					</div>
-					<!-- End Column 4 -->
-
-
-					<!-- Start Column 1 -->
-					<div class="col-6 col-md-2 col-lg-2 mb-3">
-						<a class="product-item" href="#">
-							<img src="../public/images/investigacion.png" class="img-fluid product-thumbnail">
-							<p class="title-curse">Investigación Operativa</p>
-							<h6>Francisco Donayre</h6>
-							<strong class="product-price">Semana 6</strong>
-
-							<span class="icon-cross">
-								<img src="../public/images/cross.svg" class="img-fluid">
-							</span>
-						</a>
-					</div> 
-					<!-- End Column 1 -->
-						
-					<!-- Start Column 2 -->
-					<div class="col-6 col-md-2 col-lg-2 mb-3">
-						<a class="product-item" href="#">
-							<img src="../public/images/desarrollo-web.png" class="img-fluid product-thumbnail">
-							<p class="title-curse">Desarrollo Web Integrado</p>
-							<h6>Francisco Donayre</h6>
-							<strong class="product-price">Semana 7</strong>
-
-							<span class="icon-cross">
-								<img src="../public/images/cross.svg" class="img-fluid">
-							</span>
-						</a>
-					</div> 
-					
-
-		      	</div>
-		    </div>
+					<textarea placeholder="Escribe tu resumen aquí..." rows="5"></textarea>
+					<button type="submit">Enviar</button>
+				</div>
+			
+			</div>	
 		</div>
+		
+
+		
 
 
 		
@@ -198,7 +228,7 @@
 
 		<script src="../public/js/bootstrap.bundle.min.js"></script>
 		<script src="../public/js/tiny-slider.js"></script>
-		<script src="../public/js/custom.js"></script> 
+		
 	</body>
 
 </html>

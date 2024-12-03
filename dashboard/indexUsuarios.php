@@ -1,6 +1,6 @@
 <!doctype html>
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Brainbook/config/Database.php';
+require_once __DIR__ . '/../config/Database.php';
 session_start(); // Crear instancia de la clase Database y obtener la conexión
 $database = new Database();
 $conn = $database->getConnection(); // Verifica si el usuario ha iniciado sesión 
@@ -109,7 +109,7 @@ function obtenerTituloRol($rol_usuario)
                     <a href="indexCursos.php" class=""><i class="material-icons">collections_bookmark</i>Cursos</a>
                 </li>
                 <li class="">
-                    <a href="indexSolicitudes.php" class=""><i class="material-icons">chrome_reader_mode</i>Rubricas</a>
+                    <a href="indexModulos.php" class=""><i class="material-icons">chrome_reader_mode</i>Modulos</a>
                 </li>
             </ul>
         </div>
@@ -199,7 +199,7 @@ function obtenerTituloRol($rol_usuario)
                             $offset = ($pagina_actual - 1) * $registros_por_pagina;
 
                             // Crear instancia de la clase Database y obtener la conexión
-                            require_once $_SERVER['DOCUMENT_ROOT'] . '/Brainbook/config/Database.php';
+                            require_once __DIR__ . '/../config/Database.php';
                             $database = new Database();
                             $conn = $database->getConnection();
 
