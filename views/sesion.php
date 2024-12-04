@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (password_verify($password, $stored_password)) {
             // Contraseña hasheada verificada
             session_start();
+            $_SESSION['id_usuario'] = $id_usuario; // Almacenar el id_usuario en la sesión
             $_SESSION['usuario'] = $nombre_usuario;
             $_SESSION['rol'] = $id_rol;
             header("Location: index.php"); // Redirecciona a un dashboard o página principal
@@ -43,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $update_stmt->execute();
 
             session_start();
+            $_SESSION['id_usuario'] = $id_usuario; // Almacenar el id_usuario en la sesión
             $_SESSION['usuario'] = $nombre_usuario;
             $_SESSION['rol'] = $id_rol;
             header("Location: index.php"); // Redirecciona a un dashboard o página principal

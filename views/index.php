@@ -3,14 +3,14 @@ include '../config/Database.php';
 global $conn;
 session_start(); // Crear instancia de la clase Database y obtener la conexión
 $database = new Database();
-$conn = $database->getConnection(); // Verifica si el usuario ha iniciado sesión 
+$conn = $database-> getConnection(); // Verifica si el usuario ha iniciado sesión 
 if (isset($_SESSION['usuario'])) {
 	$nombre_usuario = $_SESSION['usuario'];
 	$rol_usuario = $_SESSION['rol']; // Asumiendo que el rol del usuario también se almacena en la sesión // Verifica si el usuario tiene el rol adecuado (rol 3 en este caso)
 } else { // Si el usuario no ha iniciado sesión, redirige a la página de login 
 	header("Location: ../views/login.php");
 	exit();
-} // Aquí puedes colocar el contenido del dashboard echo "<h1>Bienvenido al Admin Dashboard, $nombre_usuario</h1>";el contenido del dashboard echo "echo "<h1>Bienvenido al Admin Dashboard, .$nombre_usuario .</h1>";"; 
+}  
 
 ?>
 
