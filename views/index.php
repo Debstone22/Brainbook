@@ -1,18 +1,21 @@
-<?php
-include '../config/Database.php';
-global $conn;
-session_start(); // Crear instancia de la clase Database y obtener la conexión
+<?php include '../config/Database.php';
+session_start(); // Crear instancia de la clase Database y obtener la conexión 
 $database = new Database();
-$conn = $database-> getConnection(); // Verifica si el usuario ha iniciado sesión 
+$conn = $database->getConnection(); // Verifica si el usuario ha iniciado sesión
 if (isset($_SESSION['usuario'])) {
 	$nombre_usuario = $_SESSION['usuario'];
-	$rol_usuario = $_SESSION['rol']; // Asumiendo que el rol del usuario también se almacena en la sesión // Verifica si el usuario tiene el rol adecuado (rol 3 en este caso)
-} else { // Si el usuario no ha iniciado sesión, redirige a la página de login 
+	$rol_usuario = $_SESSION['rol'];
+	$id_usuario = $_SESSION['id_usuario']; // Consulta para obtener los cursos del usuario y el nombre del profesor 
+	$query = "SELECT c.id_curso, c.nombre_curso, c.descripcion, c.version, c.imagen, p.nombre AS profesor_nombre, p.apellido AS profesor_apellido FROM curso_estudiante ce JOIN cursos c ON ce.id_curso = c.id_curso JOIN curso_profesor cp ON cp.id_curso = c.id_curso JOIN profesor p ON cp.id_profesor = p.id_profesor WHERE ce.id_usuario = :id_usuario";
+	$stmt = $conn->prepare($query);
+	$stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+	$stmt->execute();
+	$cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+	// Si el usuario no ha iniciado sesión, redirige a la página de login 
 	header("Location: ../views/login.php");
 	exit();
-}  
-
-?>
+} ?>
 
 <!doctype html>
 <html lang="en">
@@ -31,9 +34,9 @@ if (isset($_SESSION['usuario'])) {
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 	<link href="../public/css/tiny-slider.css" rel="stylesheet">
 	<link href="../public/css/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="../public/css/background.css">
 	<title>Brainbook</title>
 	<script src="../public/js/saludo.js" defer></script>
-
 </head>
 
 <body>
@@ -54,7 +57,6 @@ if (isset($_SESSION['usuario'])) {
 					<li class="nav-item active">
 						<a class="nav-link" href="index.php">Inicio</a>
 					</li>
-					<li><a class="nav-link" href="cursos.php">Cursos</a></li>
 					<li><a class="nav-link" href="foro.php">Foro</a></li>
 					<li><a class="nav-link" href="ayuda.php">Ayuda</a></li>
 
@@ -72,11 +74,12 @@ if (isset($_SESSION['usuario'])) {
 										width="30">
 								</a>
 								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a
-										class="dropdown-item" href="profile.php">Perfil</a> 
-										<?php if ($rol_usuario == 3): ?>
+										class="dropdown-item" href="profile.php">Perfil</a>
+									<?php if ($rol_usuario == 3): ?>
 										<a class="dropdown-item" href="../dashboard/indexUsuarios.php">Administrar</a>
 									<?php endif; ?>
-									<div class="dropdown-divider"></div> <a class="dropdown-item" href="logout.php">Cerrar Sesión</a>
+									<div class="dropdown-divider"></div> <a class="dropdown-item" href="logout.php">Cerrar
+										Sesión</a>
 								</div>
 							</div>
 						<?php else: ?>
@@ -99,30 +102,30 @@ if (isset($_SESSION['usuario'])) {
 		<div class="container">
 			<div class="row">
 				<div class="col">
-				<div class="intro-excerpt">
-					<h1 id="greeting"><span class="d-block"></span></h1>
-					<h1>¡Bienvenido, <?php echo htmlspecialchars($nombre_usuario); ?>!</h1>
-					<p class="mb-4">Es tiempo de adquirir más conocimientos </p>
-					<p><a href="https://tubiblioteca.utp.edu.pe/" class="btn btn-secondary me-2"
-							target="_blank">Biblioteca</a>
+					<div class="intro-excerpt">
+						<h1 id="greeting"><span class="d-block"></span></h1>
+						<h1>¡Bienvenido, <?php echo htmlspecialchars($nombre_usuario); ?>!</h1>
+						<p class="mb-4">Es tiempo de adquirir más conocimientos </p>
+						<p><a href="https://tubiblioteca.utp.edu.pe/" class="btn btn-secondary me-2"
+								target="_blank">Biblioteca</a>
 
-						<a href="https://sso.utp.edu.pe/auth/realms/Xpedition/protocol/openid-connect/auth?client_id=pao-web&redirect_uri=https%3A%2F%2Fclass.utp.edu.pe%2F&state=fefe7e3e-28bf-4744-8151-f536faa82aac&response_mode=fragment&response_type=code&scope=openid&nonce=8bbed0d1-bdca-49ae-8463-c50ecdfd2f79"
-							class="btn btn-white-outline" target="_blank">Portal</a>
-					</p>
-					<a href="logout.php" class="btn btn-danger">Cerrar sesión</a>
-				</div>
+							<a href="https://sso.utp.edu.pe/auth/realms/Xpedition/protocol/openid-connect/auth?client_id=pao-web&redirect_uri=https%3A%2F%2Fclass.utp.edu.pe%2F&state=fefe7e3e-28bf-4744-8151-f536faa82aac&response_mode=fragment&response_type=code&scope=openid&nonce=8bbed0d1-bdca-49ae-8463-c50ecdfd2f79"
+								class="btn btn-white-outline" target="_blank">Portal</a>
+						</p>
+						<a href="logout.php" class="btn btn-danger">Cerrar sesión</a>
+					</div>
 				</div>
 
 				<div class="col">
-				<div class="container">
-					<h1 id="message">¡Comienza con el pie derecho!</h1>
-					<div class="progress-bar-container">
-						<div class="progress-bar" id="progress-bar"></div>
+					<div class="container">
+						<h1 id="message">¡Comienza con el pie derecho!</h1>
+						<div class="progress-bar-container">
+							<div class="progress-bar" id="progress-bar"></div>
+						</div>
+						<button id="click-btn">Haz clic aquí</button>
+						<p id="click-count">Clics: 0</p>
 					</div>
-					<button id="click-btn">Haz clic aquí</button>
-					<p id="click-count">Clics: 0</p>
-				</div>
-				<script src="../public/js/progressbar.js"></script>
+					<script src="../public/js/progressbar.js"></script>
 				</div>
 
 			</div>
@@ -137,18 +140,24 @@ if (isset($_SESSION['usuario'])) {
 			<p class="h2-title"> Continuar viendo contenido </p>
 			<div class="row">
 				<!-- Curso reciente -->
-				<div class="col-6 col-md-2 col-lg-2 mb-3">
-					<a class="product-item" href="frontedcurse.php">
-						<img src="../public/images/analisis.png" class="img-fluid product-thumbnail">
-						<p class="title-curse">Redes y Comunicaciones </p>
 
-						<strong class="product-price">Semana 4</strong>
+				<?php foreach ($cursos as $curso): ?>
+					<div class="col-6 col-md-2 col-lg-2 mb-3">
+						<a class="product-item"
+							href="frontedcurse.php?id_curso=<?php echo htmlspecialchars($curso['id_curso']); ?>">
+							<img src="<?php echo htmlspecialchars('../dashboard/' . $curso['imagen']); ?>"
+								class="img-fluid product-thumbnail">
+							<p class="title-curse"><?php echo htmlspecialchars($curso['nombre_curso']); ?></p>
+							<h6><?php echo htmlspecialchars($curso['profesor_nombre'] . ' ' . $curso['profesor_apellido']); ?>
+							</h6>
+							<strong class="product-price">Semana 7</strong>
+							<span class="icon-cross">
+								<img src="../public/images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div>
+				<?php endforeach; ?>
 
-						<span class="icon-cross">
-							<img src="../public/images/cross.svg" class="img-fluid">
-						</span>
-					</a>
-				</div>
 				<!-- fin columna 2 -->
 
 
