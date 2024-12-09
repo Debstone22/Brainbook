@@ -2,8 +2,18 @@
 session_start(); // Crear instancia de la clase Database y obtener la conexión 
 $database = new Database();
 $conn = $database->getConnection(); // Verifica si el usuario ha iniciado sesión
+$conn = $database->getConnection(); // Verifica si el usuario ha iniciado sesión
 if (isset($_SESSION['usuario'])) {
 	$nombre_usuario = $_SESSION['usuario'];
+	$rol_usuario = $_SESSION['rol'];
+	$id_usuario = $_SESSION['id_usuario']; // Consulta para obtener los cursos del usuario y el nombre del profesor 
+	$query = "SELECT c.id_curso, c.nombre_curso, c.descripcion, c.version, c.imagen, p.nombre AS profesor_nombre, p.apellido AS profesor_apellido FROM curso_estudiante ce JOIN cursos c ON ce.id_curso = c.id_curso JOIN curso_profesor cp ON cp.id_curso = c.id_curso JOIN profesor p ON cp.id_profesor = p.id_profesor WHERE ce.id_usuario = :id_usuario";
+	$stmt = $conn->prepare($query);
+	$stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+	$stmt->execute();
+	$cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+	// Si el usuario no ha iniciado sesión, redirige a la página de login 
 	$rol_usuario = $_SESSION['rol'];
 	$id_usuario = $_SESSION['id_usuario']; // Consulta para obtener los cursos del usuario y el nombre del profesor 
 	$query = "SELECT c.id_curso, c.nombre_curso, c.descripcion, c.version, c.imagen, p.nombre AS profesor_nombre, p.apellido AS profesor_apellido FROM curso_estudiante ce JOIN cursos c ON ce.id_curso = c.id_curso JOIN curso_profesor cp ON cp.id_curso = c.id_curso JOIN profesor p ON cp.id_profesor = p.id_profesor WHERE ce.id_usuario = :id_usuario";
@@ -81,6 +91,7 @@ if (isset($_SESSION['usuario'])) {
 									<?php endif; ?>
 									<div class="dropdown-divider"></div> <a class="dropdown-item" href="logout.php">Cerrar
 										Sesión</a>
+									
 								</div>
 							</div>
 						<?php else: ?>
@@ -110,7 +121,7 @@ if (isset($_SESSION['usuario'])) {
 							target="_blank">Biblioteca</a>
 
 						<a href="https://sso.utp.edu.pe/auth/realms/Xpedition/protocol/openid-connect/auth?client_id=pao-web&redirect_uri=https%3A%2F%2Fclass.utp.edu.pe%2F&state=fefe7e3e-28bf-4744-8151-f536faa82aac&response_mode=fragment&response_type=code&scope=openid&nonce=8bbed0d1-bdca-49ae-8463-c50ecdfd2f79"
-							class="btn btn-white-outline" target="_blank">UTP Class</a>
+							class="btn btn-white-outline" target="_blank">UTPClass</a>
 					</p>
 					
 				</div>
@@ -168,16 +179,11 @@ if (isset($_SESSION['usuario'])) {
 				<?php endforeach; ?>
 
 				<!-- fin columna 2 -->
-
-
+			
 			</div>
 		</div>
 	</div>
 	<!-- End Product Section -->
-
-
-
-
 	<script src="../public/js/bootstrap.bundle.min.js"></script>
 	<script src="../public/js/tiny-slider.js"></script>
 	<script src="../public/js/custom.js"></script>

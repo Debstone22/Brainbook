@@ -69,7 +69,7 @@
                   </div>
 
                   <form action="sesion.php" method="POST">
-                    <p>Por favor ingresa tu código de estudiante</p>
+                  <p>Por favor ingresa tu código de estudiante</p>
                     <div data-mdb-input-init class="form-outline mb-4">
                       <input type="text" name="email" id="form2Example11" class="form-control"
                         placeholder="Aquí ingresa tu correo @utp.edu.pe" required />

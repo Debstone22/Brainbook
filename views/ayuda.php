@@ -53,7 +53,7 @@ if (isset($_SESSION['usuario'])) {
 			<div class="collapse navbar-collapse" id="navbarsFurni">
 				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
 					
-					<li><a class="nav-link" href="cursos.php">Cursos</a></li>
+					<li><a class="nav-link" href="index.php">Cursos</a></li>
 					<li><a class="nav-link" href="foro.php">Foro</a></li>
 					<li class="nav-item active" ><a class="nav-link" href="ayuda.php">Ayuda</a></li>
 				</ul>
