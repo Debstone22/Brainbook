@@ -51,9 +51,7 @@ if (isset($_SESSION['usuario'])) {
 
 			<div class="collapse navbar-collapse" id="navbarsFurni">
 				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-					<li>
-						<a class="nav-link" href="index.php">Inicio</a>
-					</li>
+					
 					<li><a class="nav-link" href="cursos.php">Cursos</a></li>
 					<li class="nav-item active"> <a class="nav-link" href="foro.php">Foro</a></li>
 					<li><a class="nav-link" href="ayuda.php">Ayuda</a></li>
@@ -97,7 +95,7 @@ if (isset($_SESSION['usuario'])) {
 	<div class="hero">
 		<div class="container">
 			<div class="row justify-content-between">
-				<div class="col-lg-5">
+				<div class="col">
 					<div class="intro-excerpt">
 						<h1></h1>
 						<h1>Foro General</h1>
@@ -108,7 +106,7 @@ if (isset($_SESSION['usuario'])) {
 								class="btn btn-white-outline">Responde</a></p>
 					</div>
 				</div>
-				<div class="col-lg-7">
+				<div class="col">
 					<div class="hero-img-wrap">
 						<img src="../public/images/foro.png" class="img-fluid">
 					</div>

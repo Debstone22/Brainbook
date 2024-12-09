@@ -116,59 +116,88 @@ a.more {
 }
 
 .hero {
-  background: #000000;
-  padding: calc(1rem - 30px) 0 0rem 0; }
-  @media (min-width: 768px) {
-    .hero {
-      padding: calc(1rem - 30px) 0 2rem 0; } }
-  @media (min-width: 992px) {
-    .hero {
-      padding: calc(2rem - 30px) 0 4rem 0; } }
+  background-image: radial-gradient(#021027, #000000);
+  height: 450px; /* Altura fija de 500px */
+  padding: 0; /* Ajustar el padding si es necesario */
+  display: flex; /* Para centrar el contenido */
+  flex-direction: column;
+  justify-content: center; /* Centrar verticalmente */
+  align-items: center; /* Centrar horizontalmente */
+}
+
+@media (min-width: 768px) {
+  .hero {
+    height: 450px; /* Altura fija de 500px en pantallas medianas */
+  }
+}
+
+@media (min-width: 992px) {
+  .hero {
+    height: 450px; /* Altura fija de 500px en pantallas grandes */
+  }
+}
+
+.hero .intro-excerpt {
+  position: relative;
+  z-index: 4;
+}
+
+@media (min-width: 992px) {
   .hero .intro-excerpt {
-    position: relative;
-    z-index: 4; }
-    @media (min-width: 992px) {
-      .hero .intro-excerpt {
-        max-width: 450px; } }
+    max-width: 450px;
+  }
+}
+
+.hero h1 {
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+
+@media (min-width: 1400px) {
   .hero h1 {
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 30px; }
-    @media (min-width: 1400px) {
-      .hero h1 {
-        font-size: 54px; } }
-  .hero p {
-    color: rgba(255, 255, 255, 0.5);
-    margin-botom: 30px; }
-  .hero .hero-img-wrap {
-    position: relative; }
-    .hero .hero-img-wrap img {
-      position: relative;
-      top: 10px;
-      right: 0px;
-      z-index: 2;
-      max-width: 650px;
-      left: -20px; }
-      @media (min-width: 768px) {
-        .hero .hero-img-wrap img {
-          right: 0px;
-          left: -80px;
-          top: 20px; 
-        
-        } 
-        }
-      @media (min-width: 992px) {
-        .hero .hero-img-wrap img {
-          left: 0px;
-          top: 30px;
-          position: absolute;
-          right: -30px; } }
-      @media (min-width: 1200px) {
-        .hero .hero-img-wrap img {
-          left: 0px;
-          top: 30px;
-          right: -50px; } }
-    
+    font-size: 54px;
+  }
+}
+
+.hero p {
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 30px;
+}
+
+.hero .hero-img-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 100%; /* Asegura que las imágenes también sigan el diseño */
+}
+
+.hero .hero-img-wrap img {
+  position: relative;
+  top: auto; /* Se puede ajustar según sea necesario */
+  z-index: 2;
+  max-width: 650px;
+}
+
+@media (min-width: 768px) {
+  .hero .hero-img-wrap img {
+    top: auto; /* Ajustar si es necesario */
+  }
+}
+
+@media (min-width: 992px) {
+  .hero .hero-img-wrap img {
+    top: auto; /* Ajustar si es necesario */
+  }
+}
+
+@media (min-width: 1200px) {
+  .hero .hero-img-wrap img {
+    top: auto; /* Ajustar si es necesario */
+  }
+}
+
 
 .btn {
   font-weight: 600;
@@ -251,7 +280,7 @@ a.more {
 .show {display: block;}
 
 
-
+/*Tarjeta de cursos*/
 .product-item {
   display: flex; /* Usar flexbox para alinear el contenido */
   flex-direction: column; /* Alinear los elementos en columna */
@@ -272,8 +301,8 @@ a.more {
 }
 
 .product-thumbnail {
-  max-width: 100%; /* Asegurarse de que la imagen no exceda el contenedor */
-  height: auto; /* Mantener la proporción de la imagen */
+  width: 100%; /* Asegurarse de que la imagen no exceda el contenedor */
+  height: 100px; /* Mantener la proporción de la imagen */
 }
 
 .title-curse, .product-price, h3 {
@@ -835,11 +864,6 @@ button:hover {
   }
   /*Fin de la edicion del Login*/
 
-  .h2-title{
-    text-align: center;
-    color: #000000;
-    font-size: 25px;
-  }
 
   .title-curse{
     color: #000000;
@@ -1316,25 +1340,20 @@ button:hover {
   user-select: none;
 }
 
-/*Boton de confirmación de haber leido el modulo */
-/* The switch - the box around the slider */
+/* Estilo del interruptor */
 .switch {
-  font-size: 20px;
   position: relative;
   display: inline-block;
-  width: 4em;
-  height: 2em;
-  transform: translateY(11px); /* Ajusta el valor según sea necesario */
+  width: 34px;
+  height: 20px;
 }
 
-/* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -1343,40 +1362,29 @@ button:hover {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
-  transition: .4s;
-  border-radius: 5px;
+  transition: 0.4s;
+  border-radius: 20px;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 1.4em;
-  width: 0.1em;
-  border-radius: 0px;
-  left: 0.3em;
-  bottom: 0.3em;
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
   background-color: white;
-  transition: .4s;
+  transition: 0.4s;
+  border-radius: 50%;
 }
 
 input:checked + .slider {
-  background-color: #171717;
-  box-shadow: inset 2px 5px 10px rgb(0, 0, 0);
+  background-color: #2196F3;
 }
 
 input:checked + .slider:before {
-  transform: translateX(2.8em) rotate(360deg);
+  transform: translateX(14px);
 }
-.switch-title {
-  color: #ffffff;
-  margin-left: 10px; /* Espacio entre el switch y el texto */
-  font-size: 20px; /* Tamaño de fuente */
-  transform: translateY(11px); /* Ajusta el valor según sea necesario */
-  vertical-align: middle; /* Alineación vertical */
-  display: inline-block; /* Asegura que se comporte como un bloque en línea */
-}
-
 /*Fin del switch*/
 
 .summary-container{
@@ -1395,47 +1403,34 @@ input:checked + .slider:before {
   
   width: 80%;
   margin: 0 auto;
+  padding: calc(1rem - 30px) 0 0rem 0; 
+  
 }
-
-#message {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.progress-bar-container {
+.progress-container {
   width: 100%;
-  background-color: #e0e0e0;
-  height: 30px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.progress-bar {
-  height: 100%;
-  width: 0;
-  background-color: #4caf50;
-  border-radius: 10px;
-  transition: width 0.3s ease-in-out;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 18px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #f3f3f3;
+  border: 1px solid #ddd;
   border-radius: 5px;
-  cursor: pointer;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 30px;
+  width: 0%;
+  background-color: #4caf50;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+  transition: width 0.5s ease-in-out;
+}
+.message {
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #cfcbcb;
 }
 
-button:hover {
-  background-color: #45a049;
-}
 
-#click-count {
-  font-size: 18px;
-  margin-top: 20px;
-}
+
+
 /*Fin Barra de progreso*/

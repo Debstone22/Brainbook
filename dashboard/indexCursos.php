@@ -207,7 +207,7 @@ function obtenerTituloRol($rol_usuario)
                                     $pagina_actual = 1;
                                 } // Calcula el offset 
                                 $offset = ($pagina_actual - 1) * $registros_por_pagina; // Crear instancia de la clase Database y obtener la conexión 
-                                require_once $_SERVER['DOCUMENT_ROOT'] . '/Brainbook/config/Database.php';
+                                require_once $_SERVER['DOCUMENT_ROOT'] . '/config/Database.php';
                                 $database = new Database();
                                 $conn = $database->getConnection(); // Consulta SQL con límite y offset para la paginación 
                                 $consulta = "SELECT cursos.id_curso, cursos.nombre_curso, cursos.descripcion, cursos.status, cursos.version, cursos.imagen, (SELECT COUNT(*) FROM curso_estudiante WHERE curso_estudiante.id_curso = cursos.id_curso) AS usuarios_inscritos FROM cursos LIMIT :offset, :registros_por_pagina";

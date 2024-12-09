@@ -1,6 +1,6 @@
 <!doctype html>
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Brainbook/config/Database.php';
+include '../config/Database.php';
 session_start();
 $database = new Database();
 $conn = $database->getConnection();
@@ -8,11 +8,11 @@ if (isset($_SESSION['usuario'])) {
     $nombre_usuario = $_SESSION['usuario'];
     $rol_usuario = $_SESSION['rol'];
     if ($rol_usuario != 3) {
-        header("Location: ../views/index.php");
+        header("Location: ../views/cursos.php");
         exit();
     }
 } else {
-    header("Location: ../views/index.php");
+    header("Location: ../views/cursos.php");
     exit();
 }
 
@@ -203,6 +203,7 @@ function obtenerTituloRol($rol_usuario)
 
                             // Crear instancia de la clase Database y obtener la conexión
                             require_once __DIR__ . '/../config/Database.php';
+
                             $database = new Database();
                             $conn = $database->getConnection();
 

@@ -1,6 +1,6 @@
 <!doctype html>
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Brainbook/config/Database.php';
+include '../config/Database.php';
 session_start();
 $database = new Database();
 $conn = $database->getConnection();
