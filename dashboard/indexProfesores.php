@@ -1,6 +1,6 @@
 <!doctype html>
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Brainbook/config/Database.php';
+include '../config/Database.php';
 session_start();
 $database = new Database();
 $conn = $database->getConnection();
@@ -105,9 +105,7 @@ function obtenerTituloRol($rol_usuario)
                 <li class="">
                     <a href="indexCursos.php" class=""><i class="material-icons">collections_bookmark</i>Cursos</a>
                 </li>
-                <li class="">
-                    <a href="indexSolicitudes.php" class=""><i class="material-icons">chrome_reader_mode</i>Rubricas</a>
-                </li>
+                
             </ul>
         </div>
         <!-------page-content start----------->

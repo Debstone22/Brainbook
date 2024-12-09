@@ -7,7 +7,7 @@ let greeting;
 if (hours < 12) {
     greeting = "¡Buen día!";
 } else if (hours < 18) {
-    greeting = "¡Buena tarde!";
+    greeting = "¡Buenas tardes!";
 } else {
     greeting = "¡Buenas noches!";
 }

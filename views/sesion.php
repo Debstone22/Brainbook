@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Crear instancia de la clase Database y obtener la conexión
     $database = new Database();
-    $conn = $database->getConnection();
+    $conn = $database-> getConnection();
 
     // Preparar la consulta
     $query = "SELECT id_usuario, id_rol, nombre, password FROM Usuarios WHERE email = :email";
