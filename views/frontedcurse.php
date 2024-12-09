@@ -182,44 +182,41 @@ if (isset($_SESSION['usuario'])) {
 	<!-- Semanas -->
 
 	<h2 class="tituloCurso"><?php echo htmlspecialchars($curso['nombre_curso']); ?></h2>
-	<h6 class="tituloSemana" id="tituloSemana"></h6>
+	<h4 class="tituloSemana" id="tituloSemana"></h4>
 
-	<!-- Semanas -->
-	<div class="container my-4">
-		<div class="dropdown text-center">
-			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-				data-bs-toggle="dropdown" aria-expanded="false">
-				Selecciona una Semana
-			</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				<li>
-					<a class="dropdown-item" href="#" onclick="cambiarTitulo('Silabo', '', '')">Silabo</a>
-				</li>
-				<?php foreach ($semanas as $semana): ?>
-					<li>
-						<a class="dropdown-item" href="#"
-							onclick="cambiarTitulo('Semana <?php echo $semana['numero_semana']; ?> - <?php echo htmlspecialchars($semana['titulo']); ?>', '<?php echo htmlspecialchars($semana['pdf_url']); ?>', '<?php echo $semana['id_semana']; ?>')">
-							Semana <?php echo $semana['numero_semana']; ?> -
-							<?php echo htmlspecialchars($semana['titulo']); ?>
-						</a>
-					</li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-	</div>
-
-	<!-- Fin de Semanas -->
+	
 	<!-- Boton de Check -->
 
 	<!-- Fin de Boton-->
 
 	<div class="container">
 		<div class="row">
-			<div class="wrapper col-7">
-				
+		 <div class="wrapper col-7">
+			<!-- Semanas -->
+			<div class="container my-4">
+				<div class="dropdown text-center">
+					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+						data-bs-toggle="dropdown" aria-expanded="false">
+						Selecciona una Semana
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<li>
+							<a class="dropdown-item" href="#" onclick="cambiarTitulo('Silabo', '', '')">Silabo</a>
+						</li>
+						<?php foreach ($semanas as $semana): ?>
+							<li>
+								<a class="dropdown-item" href="#"
+									onclick="cambiarTitulo('Semana <?php echo $semana['numero_semana']; ?> - <?php echo htmlspecialchars($semana['titulo']); ?>', '<?php echo htmlspecialchars($semana['pdf_url']); ?>', '<?php echo $semana['id_semana']; ?>')">
+									Semana <?php echo $semana['numero_semana']; ?> -
+									<?php echo htmlspecialchars($semana['titulo']); ?>
+								</a>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
 			</div>
-			<div class="col">
-			<div>
+			<div class="container my-4">
+			<div class="dropdown text-center">
 			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSemanas">
 			Itinerario de Semanas del Curso
 			</button>
@@ -269,9 +266,11 @@ if (isset($_SESSION['usuario'])) {
 						</div>
 					</div>
 				</div>
-			</div>
-			</div>
-			</div>
+				</div>
+			</div>	
+		</div>
+			
+		</div>
 			
 		</div>
 	</div>
@@ -281,8 +280,8 @@ if (isset($_SESSION['usuario'])) {
 	<!-- Visor de PDF -->
 	<div class="container pdf-viewer">
 		<div class="row">
-			<div class="wrapper col-7">
-				<embed id="pdfViewer" src="" type="application/pdf" width="720px" height="720px" />
+			<div class="wrapper col-xl-7">
+				<embed id="pdfViewer" src="" type="application/pdf" width="500px" height="720px" />
 			</div>
 			<div class="col">
 				<h2>¡Escribe aquí tu resumen!</h2>
@@ -298,7 +297,7 @@ if (isset($_SESSION['usuario'])) {
 					<input type="hidden" name="id_usuario" value="<?php echo htmlspecialchars($id_usuario); ?>">
 					<input type="hidden" name="id_curso" value="<?php echo htmlspecialchars($id_curso); ?>">
 					<input type="hidden" name="id_semana" id="idSemana">
-					<button type="submit">Enviar</button>
+					<button type="submit">Actualizar</button>
 				</form>
 			</div>
 		</div>

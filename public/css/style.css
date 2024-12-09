@@ -117,7 +117,7 @@ a.more {
 
 .hero {
   background-image: radial-gradient(#021027, #000000);
-  height: 450px; /* Altura fija de 500px */
+  height: 500px; /* Altura fija de 500px */
   padding: 0; /* Ajustar el padding si es necesario */
   display: flex; /* Para centrar el contenido */
   flex-direction: column;
@@ -915,9 +915,10 @@ button:hover {
 
 .wrapper {
     display: flex;
-    justify-content: center; /* Centra el PDF horizontalmente */
+    justify-content:left; /* Centra el PDF horizontalmente */
     margin-bottom: 20px; /* Espacio entre el PDF y los botones */
 }
+
 
 .button-container {
     display: flex; /* Cambiado a flex para centrar los botones */

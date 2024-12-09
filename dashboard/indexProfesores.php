@@ -105,9 +105,7 @@ function obtenerTituloRol($rol_usuario)
                 <li class="">
                     <a href="indexCursos.php" class=""><i class="material-icons">collections_bookmark</i>Cursos</a>
                 </li>
-                <li class="">
-                    <a href="indexSolicitudes.php" class=""><i class="material-icons">chrome_reader_mode</i>Rubricas</a>
-                </li>
+                
             </ul>
         </div>
         <!-------page-content start----------->

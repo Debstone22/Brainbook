@@ -1,31 +1,36 @@
-<?php include '../config/Database.php';
+<?php
+include '../config/Database.php';
 session_start(); // Crear instancia de la clase Database y obtener la conexión 
+
 $database = new Database();
-$conn = $database->getConnection(); // Verifica si el usuario ha iniciado sesión
-$conn = $database->getConnection(); // Verifica si el usuario ha iniciado sesión
+$conn = $database->getConnection(); // Obtén la conexión
+
+// Verifica si el usuario ha iniciado sesión
 if (isset($_SESSION['usuario'])) {
-	$nombre_usuario = $_SESSION['usuario'];
-	$rol_usuario = $_SESSION['rol'];
-	$id_usuario = $_SESSION['id_usuario']; // Consulta para obtener los cursos del usuario y el nombre del profesor 
-	$query = "SELECT c.id_curso, c.nombre_curso, c.descripcion, c.version, c.imagen, p.nombre AS profesor_nombre, p.apellido AS profesor_apellido FROM curso_estudiante ce JOIN cursos c ON ce.id_curso = c.id_curso JOIN curso_profesor cp ON cp.id_curso = c.id_curso JOIN profesor p ON cp.id_profesor = p.id_profesor WHERE ce.id_usuario = :id_usuario";
-	$stmt = $conn->prepare($query);
-	$stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-	$stmt->execute();
-	$cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $nombre_usuario = $_SESSION['usuario'];
+    $rol_usuario = $_SESSION['rol'];
+    $id_usuario = $_SESSION['id_usuario'];
+
+    // Consulta para obtener los cursos del usuario y el nombre del profesor
+    $query = "SELECT c.id_curso, c.nombre_curso, c.descripcion, c.version, c.imagen, 
+                     p.nombre AS profesor_nombre, p.apellido AS profesor_apellido 
+              FROM curso_estudiante ce 
+              JOIN cursos c ON ce.id_curso = c.id_curso 
+              JOIN curso_profesor cp ON cp.id_curso = c.id_curso 
+              JOIN profesor p ON cp.id_profesor = p.id_profesor 
+              WHERE ce.id_usuario = :id_usuario";
+    
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+    $stmt->execute();
+    $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } else {
-	// Si el usuario no ha iniciado sesión, redirige a la página de login 
-	$rol_usuario = $_SESSION['rol'];
-	$id_usuario = $_SESSION['id_usuario']; // Consulta para obtener los cursos del usuario y el nombre del profesor 
-	$query = "SELECT c.id_curso, c.nombre_curso, c.descripcion, c.version, c.imagen, p.nombre AS profesor_nombre, p.apellido AS profesor_apellido FROM curso_estudiante ce JOIN cursos c ON ce.id_curso = c.id_curso JOIN curso_profesor cp ON cp.id_curso = c.id_curso JOIN profesor p ON cp.id_profesor = p.id_profesor WHERE ce.id_usuario = :id_usuario";
-	$stmt = $conn->prepare($query);
-	$stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-	$stmt->execute();
-	$cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} else {
-	// Si el usuario no ha iniciado sesión, redirige a la página de login 
-	header("Location: ../views/login.php");
-	exit();
-} ?>
+    // Si el usuario no ha iniciado sesión, redirige a la página de login
+    header("Location: login.php");
+    exit();
+}
+?>
+
 
 
 <!doctype html>
