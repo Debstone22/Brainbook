@@ -69,11 +69,11 @@
 
                   <div class="text-center">
                     <img src="../public/images/Logo2.png" style="width: 185px;" alt="logo">
-                    <h4 class="mt-1 mb-5 pb-1">Inicia sesiónasdad en Brainbook</h4>
+                    <h4 class="mt-1 mb-5 pb-1">Inicia sesión en Brainbook</h4>
                   </div>
 
                   <form action="sesion.php" method="POST">
-                    <p>Por favor ingresa tu correo electrónico</p>
+                  <p>Por favor ingresa tu código de estudiante</p>
                     <div data-mdb-input-init class="form-outline mb-4">
                       <input type="text" name="email" id="form2Example11" class="form-control"
                         placeholder="Aquí ingresa tu correo @utp.edu.pe" required />
@@ -86,7 +86,7 @@
                     <div class="text-center pt-1 mb-5 pb-1">
                       <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
                         type="submit">Ingresar</button>
-                      <a class="text-muted" href="#!">¿Te olvidaste?</a>
+                      <a class="text-muted" href="https://contrasena.utp.edu.pe/Recuperacion/OlvideMiClave.aspx" >¿Te olvidaste?</a>
                     </div>
                   </form>
 

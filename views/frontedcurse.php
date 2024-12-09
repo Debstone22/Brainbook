@@ -1,32 +1,57 @@
-<?php include '../config/Database.php';
+<?php
+include '../config/Database.php';
 global $conn;
-session_start(); // Crear instancia de la clase Database y obtener la conexión 
+session_start(); // Crear instancia de la clase Database y obtener la conexión
+
 $database = new Database();
-$conn = $database->getConnection(); // Verifica si el usuario ha iniciado sesión
+$conn = $database->getConnection();
+
+// Verifica si el usuario ha iniciado sesión
 if (isset($_SESSION['usuario'])) {
 	$nombre_usuario = $_SESSION['usuario'];
-	$rol_usuario = $_SESSION['rol']; // Asumiendo que el rol del usuario también se almacena en la sesión // Verifica si se ha pasado un id_curso 
+	$rol_usuario = $_SESSION['rol'];
+	$id_usuario = $_SESSION['id_usuario']; // Asegúrate de recuperar el id_usuario desde la sesión
+
+	// Verifica si se ha pasado un id_curso 
 	if (isset($_GET['id_curso'])) {
-		$id_curso = $_GET['id_curso']; // Consulta para obtener la información del curso 
+		$id_curso = $_GET['id_curso'];
+
+		// Consulta para obtener la información del curso 
 		$query_curso = "SELECT * FROM cursos WHERE id_curso = :id_curso";
 		$stmt_curso = $conn->prepare($query_curso);
 		$stmt_curso->bindParam(':id_curso', $id_curso, PDO::PARAM_INT);
 		$stmt_curso->execute();
-		$curso = $stmt_curso->fetch(PDO::FETCH_ASSOC); // Consulta para obtener las semanas del curso 
+		$curso = $stmt_curso->fetch(PDO::FETCH_ASSOC);
+
+		// Consulta para obtener las semanas del curso 
 		$query_semanas = "SELECT cs.*, s.numero_semana FROM curso_semana cs JOIN semana s ON cs.id_semana = s.id_semana WHERE cs.id_curso = :id_curso ORDER BY s.numero_semana";
 		$stmt_semanas = $conn->prepare($query_semanas);
 		$stmt_semanas->bindParam(':id_curso', $id_curso, PDO::PARAM_INT);
 		$stmt_semanas->execute();
 		$semanas = $stmt_semanas->fetchAll(PDO::FETCH_ASSOC);
-	} else { // Redirigir si no se pasa un id_curso
+
+		$id_semana = $semanas[0]['id_semana'];
+		$query_resumen = "SELECT contenido FROM resumen WHERE id_usuario = :id_usuario AND id_curso = :id_curso AND id_semana = :id_semana";
+		$stmt_resumen = $conn->prepare($query_resumen);
+		$stmt_resumen->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+		$stmt_resumen->bindParam(':id_curso', $id_curso, PDO::PARAM_INT);
+		$stmt_resumen->bindParam(':id_semana', $id_semana, PDO::PARAM_INT);
+		$stmt_resumen->execute();
+		$resumen = $stmt_resumen->fetch(PDO::FETCH_ASSOC);
+		$contenido_resumen = $resumen ? $resumen['contenido'] : '';
+
+	} else {
+		// Redirigir si no se pasa un id_curso
 		header("Location: cursos.php");
 		exit();
 	}
-} else { // Redirigir a la página de login si el usuario no ha iniciado sesión 
+} else {
+	// Redirigir a la página de login si el usuario no ha iniciado sesión 
 	header("Location: ../views/login.php");
 	exit();
 }
 ?>
+
 
 <!doctype html>
 <html lang="en">
@@ -99,6 +124,7 @@ if (isset($_SESSION['usuario'])) {
 					</li>
 					<li><a class="nav-link" href="foro.php">Foro</a></li>
 					<li><a class="nav-link" href="ayuda.php">Ayuda</a></li>
+
 				</ul>
 
 				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
@@ -129,7 +155,6 @@ if (isset($_SESSION['usuario'])) {
 				</ul>
 			</div>
 		</div>
-
 	</nav>
 	<!-- Fin de navegación -->
 
@@ -140,25 +165,28 @@ if (isset($_SESSION['usuario'])) {
 
 	<!-- Semanas -->
 	<div class="container my-4">
-		<div class="dropdown text-center"> <button class="btn btn-secondary dropdown-toggle" type="button"
-				id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"> Selecciona una Semana </button>
+		<div class="dropdown text-center">
+			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+				data-bs-toggle="dropdown" aria-expanded="false">
+				Selecciona una Semana
+			</button>
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 				<li>
-					<a class="dropdown-item" href="#" onclick="cambiarTitulo('Silabo', '')">Silabo</a>
+					<a class="dropdown-item" href="#" onclick="cambiarTitulo('Silabo', '', '')">Silabo</a>
 				</li>
 				<?php foreach ($semanas as $semana): ?>
 					<li>
 						<a class="dropdown-item" href="#"
-							onclick="cambiarTitulo('Semana <?php echo $semana['numero_semana']; ?> - <?php echo htmlspecialchars($semana['titulo']); ?>', '<?php echo htmlspecialchars($semana['pdf_url']); ?>')">
+							onclick="cambiarTitulo('Semana <?php echo $semana['numero_semana']; ?> - <?php echo htmlspecialchars($semana['titulo']); ?>', '<?php echo htmlspecialchars($semana['pdf_url']); ?>', '<?php echo $semana['id_semana']; ?>')">
 							Semana <?php echo $semana['numero_semana']; ?> -
 							<?php echo htmlspecialchars($semana['titulo']); ?>
 						</a>
 					</li>
 				<?php endforeach; ?>
 			</ul>
-
 		</div>
 	</div>
+
 	<!-- Fin de Semanas -->
 	<!-- Boton de Check -->
 
@@ -167,8 +195,6 @@ if (isset($_SESSION['usuario'])) {
 	<div class="container">
 		<div class="row">
 			<div class="wrapper col-7">
-
-
 				<button>
 					<span class="span-mother">
 						<span>A</span>
@@ -222,7 +248,6 @@ if (isset($_SESSION['usuario'])) {
 					<span class="slider"></span>
 				</label>
 				<span class="switch-title">¿Lo completaste? Marca la casilla</span>
-
 			</div>
 		</div>
 	</div>
@@ -242,8 +267,13 @@ if (isset($_SESSION['usuario'])) {
 						<div class="keyboard"></div>
 					</div>
 				</div>
-				<textarea placeholder="Escribe tu resumen aquí..." rows="5"></textarea>
-				<button type="submit">Enviar</button>
+				<form method="post" action="guardar_resumen.php">
+					<textarea name="contenido" placeholder="Escribe tu resumen aquí..." rows="5"></textarea>
+					<input type="hidden" name="id_usuario" value="<?php echo htmlspecialchars($id_usuario); ?>">
+					<input type="hidden" name="id_curso" value="<?php echo htmlspecialchars($id_curso); ?>">
+					<input type="hidden" name="id_semana" id="idSemana">
+					<button type="submit">Enviar</button>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -265,16 +295,53 @@ if (isset($_SESSION['usuario'])) {
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-	<!-- Script para cambiar el título de la semana -->
 	<script>
-		function cambiarTitulo(titulo, pdfUrl) {
+		const semanas = <?php echo json_encode($semanas); ?>;
+		let semanaActual = 0;
+
+		function cambiarTitulo(titulo, pdfUrl, idSemana) {
 			const nombreCurso = "<?php echo htmlspecialchars($curso['nombre_curso']); ?>";
 			const rutaCompleta = `docs/${nombreCurso}/${pdfUrl}`;
 			document.getElementById('tituloSemana').innerText = titulo;
 			document.getElementById('pdfViewer').src = rutaCompleta;
-			console.log(rutaCompleta);
+			document.getElementById('idSemana').value = idSemana;
+			console.log(`Ruta PDF: ${rutaCompleta}, idSemana: ${idSemana}`);
+
+			// Recuperar y mostrar el contenido del resumen para la semana seleccionada
+			fetch(`obtener_resumen.php?id_usuario=${<?php echo $id_usuario; ?>}&id_curso=${<?php echo $id_curso; ?>}&id_semana=${idSemana}`)
+				.then(response => response.text())
+				.then(contenido => {
+					// Usar trim() para eliminar espacios en blanco al inicio y al final
+					document.querySelector('textarea[name="contenido"]').value = contenido.trim();
+				});
 		}
+
+		function cambiarSemana(direccion) {
+			semanaActual += direccion;
+
+			// Asegúrate de que la semana actual esté dentro de los límites
+			if (semanaActual < 0) {
+				semanaActual = 0;
+			} else if (semanaActual >= semanas.length) {
+				semanaActual = semanas.length - 1;
+			}
+
+			const semana = semanas[semanaActual];
+			const tituloSemana = `Semana ${semana.numero_semana} - ${semana.titulo}`;
+			cambiarTitulo(tituloSemana, semana.pdf_url, semana.id_semana);
+		}
+
+		// Inicializar con la primera semana al cargar la página
+		document.addEventListener('DOMContentLoaded', (event) => {
+			if (semanas.length > 0) {
+				const semana = semanas[semanaActual];
+				const tituloSemana = `Semana ${semana.numero_semana} - ${semana.titulo}`;
+				cambiarTitulo(tituloSemana, semana.pdf_url, semana.id_semana);
+			}
+		});
 	</script>
+
+
 
 
 

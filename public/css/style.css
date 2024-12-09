@@ -137,39 +137,42 @@ a.more {
     @media (min-width: 1400px) {
       .hero h1 {
         font-size: 54px; } }
-  .hero p {
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 30px; 
-  }
-  .hero .hero-img-wrap {
-    position: relative; }
-    .hero .hero-img-wrap img {
-      position: relative;
-      top: 10px;
-      right: 0px;
-      z-index: 2;
-      max-width: 650px;
-      left: -20px; }
-      @media (min-width: 768px) {
-        .hero .hero-img-wrap img {
-          right: 0px;
-          left: -80px;
-          top: 20px; 
-        
-        } 
-        }
-      @media (min-width: 992px) {
-        .hero .hero-img-wrap img {
-          left: 0px;
-          top: 30px;
-          position: absolute;
-          right: -30px; } }
-      @media (min-width: 1200px) {
-        .hero .hero-img-wrap img {
-          left: 0px;
-          top: 30px;
-          right: -50px; } }
-    
+        .hero p {
+          color: rgba(255, 255, 255, 0.5);
+          margin-botom: 30px; }
+          /* Imagen de foro Centra horizontalmente el contenido */
+          .hero .hero-img-wrap {
+            position: relative;
+            display: flex;
+            justify-content: center; /* Centra horizontalmente el contenido */
+            align-items: center;    /* Centra verticalmente el contenido si es necesario */
+          }
+          
+          .hero .hero-img-wrap img {
+            position: relative;
+            top: 10px;
+            z-index: 2;
+            max-width: 650px;
+          }
+          
+          @media (min-width: 768px) {
+            .hero .hero-img-wrap img {
+              top: 20px;
+            }
+          }
+          
+          @media (min-width: 992px) {
+            .hero .hero-img-wrap img {
+              top: 30px;
+            }
+          }
+          
+          @media (min-width: 1200px) {
+            .hero .hero-img-wrap img {
+              top: 30px;
+            }
+          }
+          
 
 .btn {
   font-weight: 600;

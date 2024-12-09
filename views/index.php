@@ -102,34 +102,43 @@ if (isset($_SESSION['usuario'])) {
 		<div class="container">
 			<div class="row">
 				<div class="col">
-					<div class="intro-excerpt">
-						<h1 id="greeting"><span class="d-block"></span></h1>
-						<h1>¡Bienvenido, <?php echo htmlspecialchars($nombre_usuario); ?>!</h1>
-						<p class="mb-4">Es tiempo de adquirir más conocimientos </p>
-						<p><a href="https://tubiblioteca.utp.edu.pe/" class="btn btn-secondary me-2"
-								target="_blank">Biblioteca</a>
+				<div class="intro-excerpt">
+					<h1 id="greeting"><span class="d-block"></span></h1>
+					<h1>¡Bienvenido, <?php echo htmlspecialchars($nombre_usuario); ?>!</h1>
+					<p class="mb-4">Es tiempo de adquirir más conocimientos </p>
+					<p><a href="https://tubiblioteca.utp.edu.pe/" class="btn btn-secondary me-2"
+							target="_blank">Biblioteca</a>
 
-							<a href="https://sso.utp.edu.pe/auth/realms/Xpedition/protocol/openid-connect/auth?client_id=pao-web&redirect_uri=https%3A%2F%2Fclass.utp.edu.pe%2F&state=fefe7e3e-28bf-4744-8151-f536faa82aac&response_mode=fragment&response_type=code&scope=openid&nonce=8bbed0d1-bdca-49ae-8463-c50ecdfd2f79"
-								class="btn btn-white-outline" target="_blank">Portal</a>
-						</p>
-						<a href="logout.php" class="btn btn-danger">Cerrar sesión</a>
-					</div>
+						<a href="https://sso.utp.edu.pe/auth/realms/Xpedition/protocol/openid-connect/auth?client_id=pao-web&redirect_uri=https%3A%2F%2Fclass.utp.edu.pe%2F&state=fefe7e3e-28bf-4744-8151-f536faa82aac&response_mode=fragment&response_type=code&scope=openid&nonce=8bbed0d1-bdca-49ae-8463-c50ecdfd2f79"
+							class="btn btn-white-outline" target="_blank">Portal</a>
+					</p>
+					
+				</div>
 				</div>
 
 				<div class="col">
-					<div class="container">
-						<h1 id="message">¡Comienza con el pie derecho!</h1>
-						<div class="progress-bar-container">
-							<div class="progress-bar" id="progress-bar"></div>
+						<div class="container">
+								<h1></h1>
+								<h1 id="message">¡Comienza con el pie derecho!</h1>
+										<div class="progress-bar-container">
+											<div class="progress-bar" id="progress-bar"></div>
+										</div>
+								<button id="click-btn">Haz clic aquí</button>
+								<p id="click-count">Clics: 0</p>
 						</div>
-						<button id="click-btn">Haz clic aquí</button>
-						<p id="click-count">Clics: 0</p>
-					</div>
+											
 					<script src="../public/js/progressbar.js"></script>
 				</div>
 
 			</div>
 		</div>
+		<iframe 
+			src="https://calendar.google.com/calendar/embed?src=4c975285029ae97c311c58e477d7b293974f101c60d0735c01bc779ca6a74072%40group.calendar.google.com&ctz=America%2FLima" 
+			style="border: 0; width: 100%; height: 300px;" 
+			frameborder="0" 
+			scrolling="no">
+		</iframe>
+
 	</div>
 	<!-- Fin de la sección -->
 
@@ -159,16 +168,11 @@ if (isset($_SESSION['usuario'])) {
 				<?php endforeach; ?>
 
 				<!-- fin columna 2 -->
-
-
+			
 			</div>
 		</div>
 	</div>
 	<!-- End Product Section -->
-
-
-
-
 	<script src="../public/js/bootstrap.bundle.min.js"></script>
 	<script src="../public/js/tiny-slider.js"></script>
 	<script src="../public/js/custom.js"></script>

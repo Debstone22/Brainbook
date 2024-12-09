@@ -96,7 +96,7 @@ if (isset($_SESSION['usuario'])) {
 	<div class="hero">
 		<div class="container">
 			<div class="row justify-content-between">
-				<div class="col-lg-5">
+				<div class="col">
 					<div class="intro-excerpt">
 						<h1></h1>
 						<h1>Sección de Ayuda</h1>
@@ -108,7 +108,7 @@ if (isset($_SESSION['usuario'])) {
 								target="_blank">Demo</a></p>
 					</div>
 				</div>
-				<div class="col-lg-7">
+				<div class="col">
 					<div class="hero-img-wrap">
 						<img src="../public/images/foro.png" class="img-fluid">
 					</div>
