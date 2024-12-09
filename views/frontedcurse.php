@@ -5,17 +5,27 @@ $database = new Database();
 $conn = $database->getConnection(); // Verifica si el usuario ha iniciado sesión
 if (isset($_SESSION['usuario'])) {
 	$nombre_usuario = $_SESSION['usuario'];
+	$id_usuario = $_SESSION['id_usuario'];
 	$rol_usuario = $_SESSION['rol']; // Asumiendo que el rol del usuario también se almacena en la sesión // Verifica si se ha pasado un id_curso 
 	if (isset($_GET['id_curso'])) {
 		$id_curso = $_GET['id_curso']; // Consulta para obtener la información del curso 
 		$query_curso = "SELECT * FROM cursos WHERE id_curso = :id_curso";
 		$stmt_curso = $conn->prepare($query_curso);
 		$stmt_curso->bindParam(':id_curso', $id_curso, PDO::PARAM_INT);
+		
 		$stmt_curso->execute();
 		$curso = $stmt_curso->fetch(PDO::FETCH_ASSOC);
 
 		// Consulta para obtener las semanas del curso 
-		$query_semanas = "SELECT cs.*, s.numero_semana FROM curso_semana cs JOIN semana s ON cs.id_semana = s.id_semana WHERE cs.id_curso = :id_curso ORDER BY s.numero_semana";
+		$query_semanas = "SELECT cs.*, s.numero_semana, p.id_estado 
+                  FROM curso_semana cs 
+                  JOIN semana s ON cs.id_semana = s.id_semana 
+                  LEFT JOIN progreso p 
+                  ON p.numero_semana = s.numero_semana 
+                     AND p.id_usuario = :id_usuario 
+                     AND p.id_curso = :id_curso 
+                  WHERE cs.id_curso = :id_curso 
+                  ORDER BY s.numero_semana";
 
 		//consulta para obtener el resumen del usuario
 		
@@ -23,6 +33,7 @@ if (isset($_SESSION['usuario'])) {
 
 		$stmt_semanas = $conn->prepare($query_semanas);
 		$stmt_semanas->bindParam(':id_curso', $id_curso, PDO::PARAM_INT);
+		$stmt_semanas->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
 		$stmt_semanas->execute();
 		$semanas = $stmt_semanas->fetchAll(PDO::FETCH_ASSOC);
 	} else { // Redirigir si no se pasa un id_curso
@@ -168,6 +179,7 @@ if (isset($_SESSION['usuario'])) {
 
 		</div>
 	</div>
+
 	<!-- Fin de Semanas -->
 	<!-- Boton de Check -->
 
@@ -176,58 +188,60 @@ if (isset($_SESSION['usuario'])) {
 	<div class="container">
 		<div class="row">
 			<div class="wrapper col-7">
-
-
-				<button>
-					<span class="span-mother">
-						<span>A</span>
-						<span>n</span>
-						<span>t</span>
-						<span>e</span>
-						<span>r</span>
-						<span>i</span>
-						<span>o</span>
-						<span>r</span>
-					</span>
-					<span class="span-mother2">
-						<span>A</span>
-						<span>n</span>
-						<span>t</span>
-						<span>e</span>
-						<span>r</span>
-						<span>i</span>
-						<span>o</span>
-						<span>r</span>
-					</span>
-				</button>
-				<button>
-					<span class="span-mother">
-						<span>S</span>
-						<span>i</span>
-						<span>g</span>
-						<span>u</span>
-						<span>i</span>
-						<span>e</span>
-						<span>n</span>
-						<span>t</span>
-						<span>e</span>
-					</span>
-					<span class="span-mother2">
-						<span>S</span>
-						<span>i</span>
-						<span>g</span>
-						<span>u</span>
-						<span>i</span>
-						<span>e</span>
-						<span>n</span>
-						<span>t</span>
-						<span>e</span>
-					</span>
-				</button>
+				
 			</div>
 			<div class="col">
 			<div>
-			<!-- Switch para cambiar el estado -->
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSemanas">
+			Itinerario de Semanas del Curso
+			</button>
+
+			<!-- Modal -->
+			<div class="modal fade" id="modalSemanas" tabindex="-1" aria-labelledby="modalSemanasLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalSemanasLabel">Semanas del Curso</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<!-- Contenido del modal: Tabla -->
+							<div class="container4">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>Titulo</th>
+											<th>Semana</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($semanas as $semana): ?>
+											<tr>
+												<td>
+													Semana <?php echo $semana['numero_semana']; ?> - <?php echo $semana['titulo']; ?>
+												</td>
+												<td>
+													<select class="form-control estado-combo" data-id-usuario="<?php echo $id_usuario; ?>"
+															data-id-curso="<?php echo $id_curso; ?>"
+															data-numero-semana="<?php echo $semana['numero_semana']; ?>">
+														<option value="1" <?php echo isset($semana['id_estado']) && $semana['id_estado'] == 1 ? 'selected' : ''; ?>>Realizado</option>
+														<option value="0" <?php echo isset($semana['id_estado']) && $semana['id_estado'] == 0 ? 'selected' : ''; ?>>Pendiente</option>
+													</select>
+												</td>
+											</tr>
+										<?php endforeach; ?>
+									</tbody>
+
+								</table>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+							
+						</div>
+					</div>
+				</div>
+			</div>
 			</div>
 			</div>
 			
@@ -266,6 +280,7 @@ if (isset($_SESSION['usuario'])) {
 	<script src="../public/js/bootstrap.bundle.min.js"></script>
 	<script src="../public/js/tiny-slider.js"></script>
 	<script src="../public/js/custom.js"></script>
+	<script src="../public/js/estado.js"></script>
 
 	<!-- Bootstrap JS, Popper.js, and jQuery -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

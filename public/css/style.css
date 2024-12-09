@@ -1434,3 +1434,125 @@ input:checked + .slider:before {
 
 
 /*Fin Barra de progreso*/
+
+/* Contenedor general de la tabla */
+.container4 {
+  margin: 20px auto;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+/* Título */
+.container4 h3 {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Tabla */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.table th, .table td {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.table-striped tbody tr:nth-child(even) {
+  background-color: #fff;
+}
+
+/* Dropdown estilo compacto */
+.estado-combo {
+  font-size: 14px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 120px; /* Ajusta el ancho según tus necesidades */
+  margin: auto;
+  display: block;
+  text-align: center;
+}
+
+/* Mejorar visibilidad de las opciones */
+.estado-combo option {
+  font-size: 14px;
+  padding: 5px;
+}
+
+/* Ajuste móvil */
+@media (max-width: 768px) {
+  .container4 {
+      padding: 10px;
+  }
+
+  .table {
+      font-size: 12px;
+  }
+
+  .estado-combo {
+      font-size: 12px;
+      width: 100%;
+  }
+}
+
+
+/* Ajusta el tamaño de la tabla dentro del modal */
+.modal-body .table {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.modal-header {
+  background-color: #f4f4f4;
+  border-bottom: 2px solid #ccc;
+}
+
+.modal-footer {
+  background-color: #f4f4f4;
+  border-top: 2px solid #ccc;
+}
+
+/* Alertas */
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+}

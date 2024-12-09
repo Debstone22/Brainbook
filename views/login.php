@@ -35,7 +35,7 @@
       <div class="collapse navbar-collapse" id="navbarsFurni">
         <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
           
-          <li><a class="nav-link" href="login.php">Cursos</a></li>
+          <li><a class="nav-link" href="login.php">Inicio</a></li>
           <li><a class="nav-link" href="login.php">Foro</a></li>
           <li><a class="nav-link" href="login.php">Ayuda</a></li>
 
@@ -44,9 +44,7 @@
 
         <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 
-          <li><a class="nav-link" herf="#">
-              <image src="../public/images/campana.png" width="18" height="20">
-            </a> </li>
+          
           <li><a class="nav-link" href="#"><img src="../public/images/user.svg"></a></li>
 
         </ul>
