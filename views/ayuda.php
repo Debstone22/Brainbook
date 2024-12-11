@@ -53,7 +53,7 @@ if (isset($_SESSION['usuario'])) {
 			<div class="collapse navbar-collapse" id="navbarsFurni">
 				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
 					
-					<li><a class="nav-link" href="index.php">Cursos</a></li>
+					<li><a class="nav-link" href="index.php">Inicio</a></li>
 					<li><a class="nav-link" href="foro.php">Foro</a></li>
 					<li class="nav-item active" ><a class="nav-link" href="ayuda.php">Ayuda</a></li>
 				</ul>
@@ -69,12 +69,13 @@ if (isset($_SESSION['usuario'])) {
 										width="30">
 								</a>
 								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a
-										class="dropdown-item" href="profile.php">Perfil</a>
+										class="dropdown-item" href="https://portal.utp.edu.pe/inicio">Portal</a>
 									<?php if ($rol_usuario == 3): ?>
 										<a class="dropdown-item" href="../dashboard/indexUsuarios.php">Administrar</a>
 									<?php endif; ?>
 									<div class="dropdown-divider"></div> <a class="dropdown-item" href="logout.php">Cerrar
 										Sesión</a>
+									
 								</div>
 							</div>
 						<?php else: ?>

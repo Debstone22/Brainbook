@@ -72,12 +72,13 @@ if (isset($_SESSION['usuario'])) {
 										width="30">
 								</a>
 								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a
-										class="dropdown-item" href="profile.php">Perfil</a>
+										class="dropdown-item" href="https://portal.utp.edu.pe/inicio">Portal</a>
 									<?php if ($rol_usuario == 3): ?>
 										<a class="dropdown-item" href="../dashboard/indexUsuarios.php">Administrar</a>
 									<?php endif; ?>
 									<div class="dropdown-divider"></div> <a class="dropdown-item" href="logout.php">Cerrar
 										Sesión</a>
+									
 								</div>
 							</div>
 						<?php else: ?>
